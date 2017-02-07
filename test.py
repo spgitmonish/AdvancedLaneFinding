@@ -322,7 +322,7 @@ def slidingWindow(img, display_images=False):
             plt.title("Sliding Window Image")
             plt.show()
 
-        return plot_y, left_fit_x, right_fit_x
+        return plot_y, left_fit_x, right_fit_x, line_fit_pickle
     except(OSError, IOError) as e:
         # Assuming you have created a warped binary image called "img"
         # Take a histogram of the bottom half of the image
@@ -473,9 +473,9 @@ def slidingWindow(img, display_images=False):
             plt.imshow(output_image)
             plt.title("Sliding Window Image")
 
-        return plot_y, left_fit_x, right_fit_x
+        return plot_y, left_fit_x, right_fit_x, line_fit_pickle
 
-def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, display_images=False):
+def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, display_images=False):
     # Create an image to draw the lines on
     warp_zero = np.zeros_like(warped).astype(np.uint8)
     color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
@@ -494,13 +494,47 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, display_images=
     # Combine the result with the original image
     result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
 
+    # Calculate the radius based on the equation
+    # f(y) = A*y^2 + B*y + C
+    # f'(y) = 2A*y + B
+    # f''(y) = 2A
+    # R(curve) = ((1 + f'(y)^2)^1.5)/f''(y)
+    #          = ((1 + (2A*y + B)^2)^1.5)/(2A)
+
+    # Get the maximum value
+    result_copy = np.copy(result)
+
+    # Define conversions in x and y from pixels space to meters
+    ym_per_pix = 30/720 # meters per pixel in y dimension
+    xm_per_pix = 3.7/1280 # meters per pixel in x dimension
+
+    # Since this where the ROI is captured
+    max_point = (1250/1280)*30
+
+    # Fit new polynomials to x,y in world space
+    left_fit_cr = np.polyfit(plot_y*ym_per_pix, left_fit_x*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(plot_y*ym_per_pix, right_fit_x*xm_per_pix, 2)
+
+    # Calculate the new radii of curvature
+    left_radius = ((1 + (2*left_fit_cr[0]*max_point*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+    right_radius = ((1 + (2*right_fit_cr[0]*max_point*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+
+    # Now our radius of curvature is in meters
+    # Calculate the mean of the two
+    mean_radius = (left_radius + right_radius)/2
+    string_to_display = "Radius of curvature(m): " + str(mean_radius)
+
+    # Display the text at the top left corner of the image, with hershey simplex,
+    # font size as 3, in white, thickness of 2 and line type AA
+    cv2.putText(result_copy, str(string_to_display), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)
+
     if display_images == True:
         figure9 = plt.figure()
-        plt.imshow(result)
-        plt.title("Lane Image")
+        plt.imshow(result_copy)
+        plt.title("Lane Image(mod)")
         plt.show()
 
-    return result
+    return result_copy
 
 def pipelineTestImages(objpoints, imgpoints):
     # Undistort the image(needs to go in the pipeline)
@@ -525,10 +559,10 @@ def pipelineTestImages(objpoints, imgpoints):
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x = slidingWindow(warped, False)
+            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
 
             # Draw the lane
-            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, True)
+            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
 
     # Set 2
     test_images = glob.glob('test_images/test*.jpg')
@@ -548,10 +582,10 @@ def pipelineTestImages(objpoints, imgpoints):
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x = slidingWindow(warped, False)
+            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
 
             # Draw the lane
-            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, True)
+            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
 
 def pipelineVideo(image):
     # Get the image to test
@@ -581,9 +615,9 @@ imgpoints = []
 objpoints, imgpoints = cameraCalibration()
 
 # Pipeline test on the images
-#pipelineTestImages(objpoints, imgpoints)
+pipelineTestImages(objpoints, imgpoints)
 
-def debugRun():
+'''def debugRun():
     project_output = 'project_video.mp4'
     project_clip = VideoFileClip("project_video.mp4")
     frameCount = 0
@@ -599,4 +633,4 @@ def debugRun():
 project_output = 'project_video_output.mp4'
 project_clip = VideoFileClip("project_video.mp4")
 project_clip = project_clip.fl_image(pipelineVideo)
-project_clip.write_videofile(project_output, audio=False)
+project_clip.write_videofile(project_output, audio=False)'''
