@@ -1692,4 +1692,3230 @@ RR 11629.1638739
 
 FC:  464
 LR 2410.32391366
-RR
+RR 16731.8483714
+
+
+FC:  465
+LR 2266.16570526
+RR 4425.70785466
+
+
+FC:  466
+
+
+FC:  467
+LR 2512.26717746
+RR 1713.32622284
+
+
+FC:  468
+LR 3192.2593796
+RR 1475.50195266
+
+
+FC:  469
+LR 3395.63971599
+RR 1484.62028296
+
+
+FC:  470
+LR 7290.42452909
+RR 1695.1392635
+
+
+FC:  471
+LR 11841.0426705
+RR 2124.62938708
+
+
+FC:  472
+LR 81779.6902807
+RR 4111.91991038
+
+
+FC:  473
+LR 41356.3635738
+RR 23607.7425762
+
+
+FC:  474
+LR 23707.0184087
+RR 3835.23981841
+
+
+FC:  475
+LR 132387.926873
+RR 2067.48130764
+
+
+FC:  476
+LR 20813.9123939
+RR 1610.96779429
+
+
+FC:  477
+LR 8732.06185967
+RR 1523.45945394
+
+
+FC:  478
+LR 4814.58480415
+RR 1678.60705567
+
+
+FC:  479
+LR 4455.76952264
+RR 2057.52158126
+
+
+FC:  480
+LR 3904.25129996
+RR 6879.3945834
+
+
+FC:  481
+LR 3412.62365864
+RR 10503.5153967
+
+
+FC:  482
+LR 3515.82344335
+RR 6305.37969267
+
+
+FC:  483
+LR 4419.46957355
+RR 2215.85284221
+
+
+FC:  484
+LR 5462.05462338
+RR 1481.67082536
+
+
+FC:  485
+LR 5715.72784358
+RR 69390.833971
+
+
+FC:  486
+LR 10019.0537543
+RR 4512.19694329
+
+
+FC:  487
+LR 26305.2098585
+RR 1357.99734911
+
+
+FC:  488
+LR 7722.1216717
+RR 1393.95720222
+
+
+FC:  489
+LR 12299.9879493
+RR 1499.45523051
+
+
+FC:  490
+LR 6158.34694893
+RR 2648.17893188
+
+
+FC:  491
+LR 29328.9010769
+RR 3656.44436365
+
+
+FC:  492
+LR 43013.7871691
+RR 12164.7260846
+
+
+FC:  493
+LR 5638.54095483
+RR 21656.0093363
+
+
+FC:  494
+LR 6623.09526105
+RR 7450.68308983
+
+
+FC:  495
+LR 12857.7647861
+RR 10705.3227159
+
+
+FC:  496
+LR 6541.87630932
+RR 8743.51827164
+
+
+FC:  497
+LR 21076.706079
+RR 2512.74143491
+
+
+FC:  498
+LR 27221.6114378
+RR 6182.65765359
+
+
+FC:  499
+LR 33716.8348664
+RR 5390.28009686
+
+
+FC:  500
+LR 8663.1142084
+RR 2806.08613275
+
+
+FC:  501
+LR 7459.85662249
+RR 3069.3643511
+
+
+FC:  502
+LR 4097.18805031
+RR 2098.89840454
+
+
+FC:  503
+LR 5631.90367825
+RR 1878.71646437
+
+
+FC:  504
+LR 7211.50547997
+RR 2794.40207372
+
+
+FC:  505
+LR 56931.2606195
+RR 19362.6693339
+
+
+FC:  506
+LR 19959.5715735
+RR 9148.64952223
+
+
+FC:  507
+LR 63725.8277495
+RR 2738.78529311
+
+
+FC:  508
+LR 54174.4026642
+RR 862.910651559
+
+
+FC:  509
+LR 175996.415722
+RR 1626.76105411
+
+
+FC:  510
+LR 36792.7432096
+RR 7201.7203661
+
+
+FC:  511
+
+
+FC:  512
+LR 8687.19246809
+RR 1383.45933731
+
+
+FC:  513
+LR 8778.06536014
+RR 1032.84700512
+
+
+FC:  514
+LR 5727.20080632
+RR 1065.22941355
+
+
+FC:  515
+LR 4472.39810817
+RR 1324.96050604
+
+
+FC:  516
+LR 5067.51831546
+RR 1630.96426033
+
+
+FC:  517
+
+
+FC:  518
+LR 3242.18464044
+RR 4148.13857478
+
+
+FC:  519
+LR 3261.02194202
+RR 4864.45748966
+
+
+FC:  520
+LR 3457.68692718
+RR 1106.92076314
+
+
+FC:  521
+LR 9380.0121666
+RR 2027.96127875
+
+
+FC:  522
+LR 14333.5637216
+RR 1486.86682454
+
+
+FC:  523
+LR 22466.4102608
+RR 1831.44432583
+
+
+FC:  524
+LR 25631.8229116
+RR 16224.0065735
+
+
+FC:  525
+LR 21446.7447172
+RR 82606.5744034
+
+
+FC:  526
+LR 57462.2456825
+RR 7080.47984122
+
+
+FC:  527
+LR 226227.292275
+RR 9250.71551249
+
+
+FC:  528
+
+
+FC:  529
+
+
+FC:  530
+LR 440351.416988
+RR 3143.66547268
+
+
+FC:  531
+LR 698.519036724
+RR 1778.98849636
+
+
+FC:  532
+
+
+FC:  533
+LR 470.682748108
+RR 13286.9374845
+
+
+FC:  534
+LR 628.979112089
+RR 1533.03506544
+
+
+FC:  535
+LR 793.523066736
+RR 1765.20435325
+
+
+FC:  536
+
+
+FC:  537
+
+
+FC:  538
+LR 3915.79417584
+RR 2604.20184332
+
+
+FC:  539
+LR 1691.34161462
+RR 2714.0503802
+
+
+FC:  540
+LR 989.208488404
+RR 9951.6140962
+
+
+FC:  541
+LR 891.693153084
+RR 3333.63122432
+
+
+FC:  542
+LR 847.445129024
+RR 3973.03251267
+
+
+FC:  543
+LR 893.6022179
+RR 3055.50218854
+
+
+FC:  544
+LR 773.125687576
+RR 2777.35404893
+
+
+FC:  545
+LR 767.423289183
+RR 2175.3562744
+
+
+FC:  546
+LR 774.708177931
+RR 255369.607625
+
+
+FC:  547
+LR 1307.33117526
+RR 4188.60018716
+
+
+FC:  548
+LR 1322.81157834
+RR 2595.66324721
+
+
+FC:  549
+LR 1025.76540494
+RR 2871.23363887
+
+
+FC:  550
+LR 1159.77058284
+RR 1891.56884917
+
+
+FC:  551
+
+
+FC:  552
+
+
+FC:  553
+LR 2221.38607694
+RR 1334.59335648
+
+
+FC:  554
+LR 2331.20658498
+RR 909.635597522
+
+
+FC:  555
+LR 1966.49060046
+RR 820.288169801
+
+
+FC:  556
+LR 3267.19859367
+RR 751.138840716
+
+
+FC:  557
+LR 16908.5118678
+RR 854.157163375
+
+
+FC:  558
+
+
+FC:  559
+
+
+FC:  560
+LR 3017.46177456
+RR 845.316769179
+
+
+FC:  561
+LR 2912.31921147
+RR 1871.23310593
+
+
+FC:  562
+LR 1778.16132964
+RR 622.356485422
+
+
+FC:  563
+
+
+FC:  564
+
+
+FC:  565
+LR 4967.23847938
+RR 1395.83047792
+
+
+FC:  566
+LR 16812.6093447
+RR 578.24439848
+
+
+FC:  567
+LR 2236.57426689
+RR 464.255209162
+
+
+FC:  568
+LR 2289.93364794
+RR 448.804458372
+
+
+FC:  569
+LR 3179.97053477
+RR 511.09920773
+
+
+FC:  570
+LR 2819.56491909
+RR 576.77562452
+
+
+FC:  571
+LR 28555.3431843
+RR 717.474401514
+
+
+FC:  572
+LR 6833.098701
+RR 634.481207312
+
+
+FC:  573
+LR 3055.0471057
+RR 981.804760133
+
+
+FC:  574
+LR 8784.13493642
+RR 1171.15332873
+
+
+FC:  575
+
+
+FC:  576
+LR 1737.46604127
+RR 3919.82061631
+
+
+FC:  577
+
+
+FC:  578
+LR 2480.8490165
+RR 1248.9762012
+
+
+FC:  579
+LR 978.601377199
+RR 1968.63438381
+
+
+FC:  580
+LR 1815.64131514
+RR 3356.90930414
+
+
+FC:  581
+LR 17365.2814124
+RR 1405.4921576
+
+
+FC:  582
+LR 11210.677123
+RR 895.894349937
+
+
+FC:  583
+
+
+FC:  584
+LR 1852.43738383
+RR 854.818725638
+
+
+FC:  585
+
+
+FC:  586
+
+
+FC:  587
+
+
+FC:  588
+
+
+FC:  589
+
+
+FC:  590
+
+
+FC:  591
+
+
+FC:  592
+
+
+FC:  593
+
+
+FC:  594
+LR 543.589215129
+RR 4184.89953507
+
+
+FC:  595
+LR 7164.24403801
+RR 28856.8245094
+
+
+FC:  596
+LR 1095.23379347
+RR 5320.14488229
+
+
+FC:  597
+LR 1363.43018938
+RR 2805.29635335
+
+
+FC:  598
+LR 2802.13288214
+RR 3797.2902156
+
+
+FC:  599
+
+
+FC:  600
+LR 3813.12731253
+RR 2003.70776078
+
+
+FC:  601
+LR 7554.33442971
+RR 2012.51302581
+
+
+FC:  602
+LR 205847.454745
+RR 4582.15376004
+
+
+FC:  603
+
+
+FC:  604
+
+
+FC:  605
+
+
+FC:  606
+
+
+FC:  607
+
+
+FC:  608
+
+
+FC:  609
+
+
+FC:  610
+
+
+FC:  611
+
+
+FC:  612
+
+
+FC:  613
+
+
+FC:  614
+
+
+FC:  615
+
+
+FC:  616
+LR 396.199285584
+RR 1271.53094632
+
+
+FC:  617
+LR 407.227689918
+RR 1133.09110191
+
+
+FC:  618
+
+
+FC:  619
+
+
+FC:  620
+
+
+FC:  621
+
+
+FC:  622
+
+
+FC:  623
+
+
+FC:  624
+
+
+FC:  625
+
+
+FC:  626
+
+
+FC:  627
+
+
+FC:  628
+
+
+FC:  629
+
+
+FC:  630
+
+
+FC:  631
+
+
+FC:  632
+
+
+FC:  633
+
+
+FC:  634
+
+
+FC:  635
+
+
+FC:  636
+
+
+FC:  637
+
+
+FC:  638
+
+
+FC:  639
+
+
+FC:  640
+
+
+FC:  641
+
+
+FC:  642
+
+
+FC:  643
+
+
+FC:  644
+
+
+FC:  645
+
+
+FC:  646
+
+
+FC:  647
+
+
+FC:  648
+
+
+FC:  649
+
+
+FC:  650
+
+
+FC:  651
+
+
+FC:  652
+
+
+FC:  653
+
+
+FC:  654
+
+
+FC:  655
+
+
+FC:  656
+
+
+FC:  657
+
+
+FC:  658
+
+
+FC:  659
+
+
+FC:  660
+
+
+FC:  661
+
+
+FC:  662
+
+
+FC:  663
+
+
+FC:  664
+
+
+FC:  665
+
+
+FC:  666
+
+
+FC:  667
+
+
+FC:  668
+
+
+FC:  669
+
+
+FC:  670
+
+
+FC:  671
+
+
+FC:  672
+
+
+FC:  673
+
+
+FC:  674
+
+
+FC:  675
+
+
+FC:  676
+
+
+FC:  677
+
+
+FC:  678
+
+
+FC:  679
+
+
+FC:  680
+
+
+FC:  681
+
+
+FC:  682
+
+
+FC:  683
+
+
+FC:  684
+
+
+FC:  685
+
+
+FC:  686
+
+
+FC:  687
+
+
+FC:  688
+
+
+FC:  689
+
+
+FC:  690
+
+
+FC:  691
+
+
+FC:  692
+
+
+FC:  693
+LR 489.851045053
+RR 1206.56802801
+
+
+FC:  694
+
+
+FC:  695
+
+
+FC:  696
+
+
+FC:  697
+
+
+FC:  698
+
+
+FC:  699
+
+
+FC:  700
+
+
+FC:  701
+
+
+FC:  702
+
+
+FC:  703
+
+
+FC:  704
+
+
+FC:  705
+
+
+FC:  706
+
+
+FC:  707
+
+
+FC:  708
+
+
+FC:  709
+
+
+FC:  710
+
+
+FC:  711
+
+
+FC:  712
+
+
+FC:  713
+
+
+FC:  714
+
+
+FC:  715
+
+
+FC:  716
+
+
+FC:  717
+
+
+FC:  718
+
+
+FC:  719
+
+
+FC:  720
+
+
+FC:  721
+
+
+FC:  722
+
+
+FC:  723
+
+
+FC:  724
+
+
+FC:  725
+
+
+FC:  726
+
+
+FC:  727
+
+
+FC:  728
+
+
+FC:  729
+
+
+FC:  730
+
+
+FC:  731
+
+
+FC:  732
+
+
+FC:  733
+
+
+FC:  734
+
+
+FC:  735
+
+
+FC:  736
+
+
+FC:  737
+
+
+FC:  738
+
+
+FC:  739
+
+
+FC:  740
+
+
+FC:  741
+
+
+FC:  742
+
+
+FC:  743
+
+
+FC:  744
+
+
+FC:  745
+
+
+FC:  746
+
+
+FC:  747
+
+
+FC:  748
+
+
+FC:  749
+
+
+FC:  750
+
+
+FC:  751
+
+
+FC:  752
+
+
+FC:  753
+
+
+FC:  754
+
+
+FC:  755
+LR 630.989463214
+RR 1382.83566422
+
+
+FC:  756
+LR 693.018960912
+RR 1681.66199392
+
+
+FC:  757
+LR 675.751282936
+RR 1646.78900997
+
+
+FC:  758
+LR 574.999058152
+RR 1512.75540919
+
+
+FC:  759
+
+
+FC:  760
+
+
+FC:  761
+
+
+FC:  762
+
+
+FC:  763
+LR 530.060509898
+RR 1795.9860327
+
+
+FC:  764
+LR 512.094833424
+RR 1694.05308581
+
+
+FC:  765
+LR 481.777283161
+RR 2056.67144644
+
+
+FC:  766
+LR 492.627395481
+RR 2780.73623668
+
+
+FC:  767
+LR 487.683897714
+RR 2635.91115618
+
+
+FC:  768
+LR 485.521456102
+RR 1646.99904233
+
+
+FC:  769
+
+
+FC:  770
+
+
+FC:  771
+LR 550.574603797
+RR 1329.2229719
+
+
+FC:  772
+
+
+FC:  773
+
+
+FC:  774
+
+
+FC:  775
+
+
+FC:  776
+
+
+FC:  777
+
+
+FC:  778
+
+
+FC:  779
+
+
+FC:  780
+
+
+FC:  781
+
+
+FC:  782
+
+
+FC:  783
+
+
+FC:  784
+
+
+FC:  785
+
+
+FC:  786
+
+
+FC:  787
+
+
+FC:  788
+
+
+FC:  789
+
+
+FC:  790
+
+
+FC:  791
+
+
+FC:  792
+
+
+FC:  793
+
+
+FC:  794
+
+
+FC:  795
+
+
+FC:  796
+
+
+FC:  797
+
+
+FC:  798
+
+
+FC:  799
+
+
+FC:  800
+LR 1194.82380301
+RR 2609.17485365
+
+
+FC:  801
+LR 1306.75758951
+RR 6352.35038234
+
+
+FC:  802
+LR 1202.6248179
+RR 11513.2007835
+
+
+FC:  803
+LR 896.368148746
+RR 2591.24617386
+
+
+FC:  804
+
+
+FC:  805
+
+
+FC:  806
+
+
+FC:  807
+
+
+FC:  808
+
+
+FC:  809
+
+
+FC:  810
+
+
+FC:  811
+
+
+FC:  812
+
+
+FC:  813
+
+
+FC:  814
+
+
+FC:  815
+
+
+FC:  816
+
+
+FC:  817
+
+
+FC:  818
+
+
+FC:  819
+
+
+FC:  820
+
+
+FC:  821
+
+
+FC:  822
+
+
+FC:  823
+
+
+FC:  824
+
+
+FC:  825
+
+
+FC:  826
+
+
+FC:  827
+
+
+FC:  828
+
+
+FC:  829
+
+
+FC:  830
+
+
+FC:  831
+
+
+FC:  832
+
+
+FC:  833
+
+
+FC:  834
+
+
+FC:  835
+
+
+FC:  836
+
+
+FC:  837
+
+
+FC:  838
+
+
+FC:  839
+
+
+FC:  840
+
+
+FC:  841
+
+
+FC:  842
+
+
+FC:  843
+
+
+FC:  844
+
+
+FC:  845
+
+
+FC:  846
+
+
+FC:  847
+
+
+FC:  848
+
+
+FC:  849
+
+
+FC:  850
+
+
+FC:  851
+
+
+FC:  852
+
+
+FC:  853
+
+
+FC:  854
+
+
+FC:  855
+
+
+FC:  856
+
+
+FC:  857
+
+
+FC:  858
+
+
+FC:  859
+
+
+FC:  860
+
+
+FC:  861
+
+
+FC:  862
+
+
+FC:  863
+
+
+FC:  864
+
+
+FC:  865
+
+
+FC:  866
+
+
+FC:  867
+
+
+FC:  868
+
+
+FC:  869
+
+
+FC:  870
+
+
+FC:  871
+
+
+FC:  872
+
+
+FC:  873
+
+
+FC:  874
+
+
+FC:  875
+
+
+FC:  876
+
+
+FC:  877
+LR 714.958260021
+RR 2026.29232192
+
+
+FC:  878
+LR 683.834897225
+RR 1714.02623874
+
+
+FC:  879
+
+
+FC:  880
+
+
+FC:  881
+
+
+FC:  882
+
+
+FC:  883
+
+
+FC:  884
+
+
+FC:  885
+
+
+FC:  886
+
+
+FC:  887
+
+
+FC:  888
+
+
+FC:  889
+
+
+FC:  890
+LR 1932.46105522
+RR 1134.76004807
+
+
+FC:  891
+LR 2480.42778844
+RR 1093.3114923
+
+
+FC:  892
+LR 1994.89160414
+RR 919.992259267
+
+
+FC:  893
+LR 1402.21640587
+RR 611.195061804
+
+
+FC:  894
+
+
+FC:  895
+
+
+FC:  896
+
+
+FC:  897
+
+
+FC:  898
+
+
+FC:  899
+
+
+FC:  900
+
+
+FC:  901
+
+
+FC:  902
+
+
+FC:  903
+
+
+FC:  904
+
+
+FC:  905
+
+
+FC:  906
+
+
+FC:  907
+
+
+FC:  908
+
+
+FC:  909
+
+
+FC:  910
+
+
+FC:  911
+
+
+FC:  912
+
+
+FC:  913
+
+
+FC:  914
+
+
+FC:  915
+
+
+FC:  916
+
+
+FC:  917
+
+
+FC:  918
+
+
+FC:  919
+
+
+FC:  920
+
+
+FC:  921
+
+
+FC:  922
+LR 644.523127896
+RR 1359.23663476
+
+
+FC:  923
+
+
+FC:  924
+
+
+FC:  925
+
+
+FC:  926
+
+
+FC:  927
+
+
+FC:  928
+
+
+FC:  929
+
+
+FC:  930
+
+
+FC:  931
+
+
+FC:  932
+
+
+FC:  933
+
+
+FC:  934
+
+
+FC:  935
+
+
+FC:  936
+
+
+FC:  937
+
+
+FC:  938
+
+
+FC:  939
+
+
+FC:  940
+
+
+FC:  941
+
+
+FC:  942
+
+
+FC:  943
+
+
+FC:  944
+
+
+FC:  945
+
+
+FC:  946
+
+
+FC:  947
+
+
+FC:  948
+
+
+FC:  949
+
+
+FC:  950
+
+
+FC:  951
+
+
+FC:  952
+
+
+FC:  953
+
+
+FC:  954
+
+
+FC:  955
+
+
+FC:  956
+
+
+FC:  957
+LR 726.811223254
+RR 2493.13159062
+
+
+FC:  958
+LR 757.846470134
+RR 3454.82042009
+
+
+FC:  959
+LR 788.309098899
+RR 1720.49095352
+
+
+FC:  960
+
+
+FC:  961
+
+
+FC:  962
+
+
+FC:  963
+
+
+FC:  964
+
+
+FC:  965
+
+
+FC:  966
+
+
+FC:  967
+
+
+FC:  968
+LR 2457.71367419
+RR 1549.52618817
+
+
+FC:  969
+LR 3680.38675928
+RR 1540.39043867
+
+
+FC:  970
+LR 4268.28536321
+RR 1644.38322132
+
+
+FC:  971
+LR 4629.07110238
+RR 1422.04570126
+
+
+FC:  972
+LR 2560.56218607
+RR 1067.42421306
+
+
+FC:  973
+LR 2760.31575507
+RR 1267.37867386
+
+
+FC:  974
+LR 2210.60668371
+RR 1023.67900404
+
+
+FC:  975
+LR 1757.45707752
+RR 810.562222879
+
+
+FC:  976
+
+
+FC:  977
+
+
+FC:  978
+
+
+FC:  979
+
+
+FC:  980
+LR 1556.86147006
+RR 656.294779892
+
+
+FC:  981
+LR 2442.74571171
+RR 474.491263868
+
+
+FC:  982
+
+
+FC:  983
+
+
+FC:  984
+LR 2426.82748115
+RR 1366.65693614
+
+
+FC:  985
+
+
+FC:  986
+
+
+FC:  987
+
+
+FC:  988
+LR 1104.49298869
+RR 6155.02395541
+
+
+FC:  989
+LR 1710.98940504
+RR 11892.2155637
+
+
+FC:  990
+
+
+FC:  991
+
+
+FC:  992
+LR 663.757580549
+RR 1867.39668207
+
+
+FC:  993
+
+
+FC:  994
+
+
+FC:  995
+
+
+FC:  996
+
+
+FC:  997
+
+
+FC:  998
+
+
+FC:  999
+
+
+FC:  1000
+LR 1870.63704293
+RR 591.774474068
+
+
+FC:  1001
+LR 1680.81025388
+RR 847.169239691
+
+
+FC:  1002
+LR 10812.0657844
+RR 1423.38962875
+
+
+FC:  1003
+LR 3576.52955532
+RR 5947.48886845
+
+
+FC:  1004
+LR 2627.12433463
+RR 1405.61428527
+
+
+FC:  1005
+LR 4025.26312787
+RR 314.391257534
+
+
+FC:  1006
+LR 8610.48635806
+RR 343.15725049
+
+
+FC:  1007
+LR 1324.11717823
+RR 526.829940762
+
+
+FC:  1008
+
+
+FC:  1009
+
+
+FC:  1010
+
+
+FC:  1011
+LR 1975.9743666
+RR 841.16400697
+
+
+FC:  1012
+LR 5325.91526849
+RR 774.997633348
+
+
+FC:  1013
+LR 26003.2052027
+RR 648.873691855
+
+
+FC:  1014
+LR 4347.80599516
+RR 488.764183355
+
+
+FC:  1015
+LR 1383.26125363
+RR 428.689323464
+
+
+FC:  1016
+LR 1198.14492716
+RR 486.129666761
+
+
+FC:  1017
+
+
+FC:  1018
+
+
+FC:  1019
+
+
+FC:  1020
+
+
+FC:  1021
+LR 928.509842275
+RR 2020.84397001
+
+
+FC:  1022
+
+
+FC:  1023
+
+
+FC:  1024
+
+
+FC:  1025
+LR 25919.5616691
+RR 1307.4814258
+
+
+FC:  1026
+
+
+FC:  1027
+
+
+FC:  1028
+
+
+FC:  1029
+
+
+FC:  1030
+
+
+FC:  1031
+LR 997.827822087
+RR 248.717477938
+
+
+FC:  1032
+LR 1050.23809654
+RR 240.845162924
+
+
+FC:  1033
+
+
+FC:  1034
+
+
+FC:  1035
+
+
+FC:  1036
+
+
+FC:  1037
+
+
+FC:  1038
+
+
+FC:  1039
+
+
+FC:  1040
+
+
+FC:  1041
+
+
+FC:  1042
+
+
+FC:  1043
+
+
+FC:  1044
+LR 450.38282987
+RR 1434.6393924
+
+
+FC:  1045
+LR 409.095875953
+RR 1189.40359631
+
+
+FC:  1046
+LR 504.277646895
+RR 1405.26796545
+
+
+FC:  1047
+LR 497.221489647
+RR 5949.55705104
+
+
+FC:  1048
+LR 502.166879261
+RR 4371.96249226
+
+
+FC:  1049
+LR 562.078642331
+RR 13405.956565
+
+
+FC:  1050
+LR 616.44700322
+RR 3115.79191083
+
+
+FC:  1051
+LR 696.691068773
+RR 1480.24275666
+
+
+FC:  1052
+
+
+FC:  1053
+LR 1198.46060615
+RR 255895.288824
+
+
+FC:  1054
+
+
+FC:  1055
+
+
+FC:  1056
+
+
+FC:  1057
+
+
+FC:  1058
+
+
+FC:  1059
+
+
+FC:  1060
+
+
+FC:  1061
+
+
+FC:  1062
+
+
+FC:  1063
+
+
+FC:  1064
+
+
+FC:  1065
+LR 1259.1316063
+RR 540.708832029
+
+
+FC:  1066
+
+
+FC:  1067
+LR 1601.11070943
+RR 889.278291824
+
+
+FC:  1068
+
+
+FC:  1069
+
+
+FC:  1070
+
+
+FC:  1071
+
+
+FC:  1072
+
+
+FC:  1073
+
+
+FC:  1074
+
+
+FC:  1075
+
+
+FC:  1076
+
+
+FC:  1077
+
+
+FC:  1078
+
+
+FC:  1079
+
+
+FC:  1080
+LR 980.301788232
+RR 1764.10593455
+
+
+FC:  1081
+
+
+FC:  1082
+
+
+FC:  1083
+
+
+FC:  1084
+
+
+FC:  1085
+
+
+FC:  1086
+
+
+FC:  1087
+
+
+FC:  1088
+
+
+FC:  1089
+
+
+FC:  1090
+
+
+FC:  1091
+
+
+FC:  1092
+
+
+FC:  1093
+
+
+FC:  1094
+LR 1590.11601585
+RR 573.015308161
+
+
+FC:  1095
+LR 1925.22171248
+RR 768.169343686
+
+
+FC:  1096
+LR 2041.64275776
+RR 1099.29318638
+
+
+FC:  1097
+LR 2029.36758861
+RR 852.635576674
+
+
+FC:  1098
+LR 2689.39923196
+RR 1188.78789855
+
+
+FC:  1099
+
+
+FC:  1100
+LR 2188.94932666
+RR 2909.20382416
+
+
+FC:  1101
+LR 3350.27340082
+RR 4582.29647793
+
+
+FC:  1102
+LR 1870.63805265
+RR 3352.77599121
+
+
+FC:  1103
+LR 1250.21550691
+RR 3047.7947064
+
+
+FC:  1104
+LR 1022.74121587
+RR 1729.88296208
+
+
+FC:  1105
+
+
+FC:  1106
+
+
+FC:  1107
+
+
+FC:  1108
+
+
+FC:  1109
+
+
+FC:  1110
+
+
+FC:  1111
+
+
+FC:  1112
+LR 1398.41982831
+RR 586.531798114
+
+
+FC:  1113
+LR 1494.6359973
+RR 558.770994029
+
+
+FC:  1114
+LR 1680.80173133
+RR 604.042499926
+
+
+FC:  1115
+LR 1461.96576395
+RR 455.295786149
+
+
+FC:  1116
+LR 1465.36867634
+RR 409.188482114
+
+
+FC:  1117
+LR 1524.35671765
+RR 432.473503071
+
+
+FC:  1118
+LR 1664.52092309
+RR 576.652982424
+
+
+FC:  1119
+LR 1775.94053356
+RR 715.6863259
+
+
+FC:  1120
+LR 1847.11504513
+RR 671.06876913
+
+
+FC:  1121
+LR 1796.76708823
+RR 884.467794064
+
+
+FC:  1122
+
+
+FC:  1123
+
+
+FC:  1124
+
+
+FC:  1125
+
+
+FC:  1126
+
+
+FC:  1127
+LR 761.235451847
+RR 1527.76849506
+
+
+FC:  1128
+
+
+FC:  1129
+
+
+FC:  1130
+
+
+FC:  1131
+
+
+FC:  1132
+
+
+FC:  1133
+
+
+FC:  1134
+
+
+FC:  1135
+
+
+FC:  1136
+LR 1918.01052551
+RR 915.675306587
+
+
+FC:  1137
+LR 2181.02966226
+RR 882.327589162
+
+
+FC:  1138
+LR 1461.78998193
+RR 726.65009473
+
+
+FC:  1139
+LR 1374.80251577
+RR 613.031394791
+
+
+FC:  1140
+LR 1595.9431777
+RR 520.025014182
+
+
+FC:  1141
+LR 1651.84065617
+RR 741.242814291
+
+
+FC:  1142
+LR 1523.67633504
+RR 749.723470272
+
+
+FC:  1143
+LR 1495.54295709
+RR 642.03242989
+
+
+FC:  1144
+
+
+FC:  1145
+
+
+FC:  1146
+
+
+FC:  1147
+
+
+FC:  1148
+
+
+FC:  1149
+
+
+FC:  1150
+
+
+FC:  1151
+
+
+FC:  1152
+
+
+FC:  1153
+
+
+FC:  1154
+
+
+FC:  1155
+
+
+FC:  1156
+
+
+FC:  1157
+
+
+FC:  1158
+
+
+FC:  1159
+
+
+FC:  1160
+
+
+FC:  1161
+
+
+FC:  1162
+
+
+FC:  1163
+
+
+FC:  1164
+
+
+FC:  1165
+
+
+FC:  1166
+
+
+FC:  1167
+
+
+FC:  1168
+
+
+FC:  1169
+
+
+FC:  1170
+
+
+FC:  1171
+LR 1429.88098243
+RR 694.337299027
+
+
+FC:  1172
+
+
+FC:  1173
+
+
+FC:  1174
+
+
+FC:  1175
+
+
+FC:  1176
+LR 1627.32077539
+RR 898.275020695
+
+
+FC:  1177
+
+
+FC:  1178
+LR 1592.72610541
+RR 864.706429905
+
+
+FC:  1179
+
+
+FC:  1180
+
+
+FC:  1181
+
+
+FC:  1182
+
+
+FC:  1183
+
+
+FC:  1184
+
+
+FC:  1185
+
+
+FC:  1186
+
+
+FC:  1187
+
+
+FC:  1188
+
+
+FC:  1189
+
+
+FC:  1190
+
+
+FC:  1191
+
+
+FC:  1192
+
+
+FC:  1193
+
+
+FC:  1194
+
+
+FC:  1195
+
+
+FC:  1196
+
+
+FC:  1197
+
+
+FC:  1198
+
+
+FC:  1199
+
+
+FC:  1200
+
+
+FC:  1201
+
+
+FC:  1202
+
+
+FC:  1203
+
+
+FC:  1204
+
+
+FC:  1205
+
+
+FC:  1206
+
+
+FC:  1207
+
+
+FC:  1208
+
+
+FC:  1209
+
+
+FC:  1210
+
+
+FC:  1211
+
+
+FC:  1212
+
+
+FC:  1213
+LR 968.990965943
+RR 1838.75157746
+
+
+FC:  1214
+LR 1058.71210394
+RR 1888.1434024
+
+
+FC:  1215
+LR 1088.35915473
+RR 2392.73065668
+
+
+FC:  1216
+LR 1097.15701519
+RR 1829.55050144
+
+
+FC:  1217
+LR 999.90886403
+RR 2186.23873781
+
+
+FC:  1218
+LR 1109.68129736
+RR 13832.1692023
+
+
+FC:  1219
+LR 1128.17011484
+RR 5843.40137982
+
+
+FC:  1220
+LR 1199.204683
+RR 194722.216107
+
+
+FC:  1221
+
+
+FC:  1222
+
+
+FC:  1223
+
+
+FC:  1224
+
+
+FC:  1225
+
+
+FC:  1226
+LR 1611.51706182
+RR 2753.83071981
+
+
+FC:  1227
+LR 1426.51883876
+RR 2427.92935043
+
+
+FC:  1228
+LR 1259.76236332
+RR 4653.90878138
+
+
+FC:  1229
+LR 1143.78629623
+RR 22695.9964535
+
+
+FC:  1230
+LR 1286.19522885
+RR 4658.40787937
+
+
+FC:  1231
+LR 1559.45557397
+RR 30686.0892484
+
+
+FC:  1232
+LR 1935.36841592
+RR 3295.72579297
+
+
+FC:  1233
+
+
+FC:  1234
+LR 2455.3525386
+RR 7532.76804827
+
+
+FC:  1235
+LR 2809.0598621
+RR 15543.9552147
+
+
+FC:  1236
+LR 4363.88084016
+RR 11225.9608023
+
+
+FC:  1237
+LR 9144.26043421
+RR 3330.22884087
+
+
+FC:  1238
+LR 4253.60161437
+RR 173090.19013
+
+
+FC:  1239
+LR 4879.33549488
+RR 20158.0894284
+
+
+FC:  1240
+LR 4002.42462426
+RR 1510.3519196
+
+
+FC:  1241
+LR 2909.36709757
+RR 775.240371227
+
+
+FC:  1242
+LR 3418.17783686
+RR 1003.98127495
+
+
+FC:  1243
+
+
+FC:  1244
+LR 3076.06474403
+RR 1444.24765441
+
+
+FC:  1245
+
+
+FC:  1246
+
+
+FC:  1247
+
+
+FC:  1248
+LR 3477.10083085
+RR 63750.6405797
+
+
+FC:  1249
+LR 3396.90450999
+RR 2526.44029892
+
+
+FC:  1250
+
+
+FC:  1251
+LR 2570.3320143
+RR 1556.60274144
+
+
+FC:  1252
+LR 3065.15483799
+RR 1023.28504718
+
+
+FC:  1253
+LR 4199.26449124
+RR 2009.75049497
+
+
+FC:  1254
+LR 3775.42610985
+RR 2759.49686008
+
+
+FC:  1255
+LR 8596.6181435
+RR 1716.94068303
+
+
+FC:  1256
+LR 57634.419078
+RR 13390.856517
+
+
+FC:  1257
+LR 12958.9526811
+RR 2811.25508323
+
+
+FC:  1258
+LR 5425.06122802
+RR 2693.36184384
+
+
+FC:  1259
+LR 5250.40538812
+RR 6283.41105114
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Traceback (most recent call last):
+  File "test.py", line 683, in <module>
+    pipelineVideoImages(objpoints, imgpoints)
+  File "test.py", line 634, in pipelineVideoImages
+    undistorted_image = undistortImage(test_image, objpoints, imgpoints, True)
+  File "test.py", line 97, in undistortImage
+    figur2.tight_layout()
+NameError: name 'figur2' is not defined
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+OpenCV Error: Sizes of input arguments do not match (The operation is neither 'array op array' (where arrays have the same size and the same number of channels), nor 'array op scalar', nor 'scalar op array') in cv::arithm_op, file ..\..\..\modules\core\src\arithm.cpp, line 639
+Traceback (most recent call last):
+  File "test.py", line 683, in <module>
+    pipelineVideoImages(objpoints, imgpoints)
+  File "test.py", line 647, in pipelineVideoImages
+    drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
+  File "test.py", line 503, in drawLane
+    result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
+cv2.error: ..\..\..\modules\core\src\arithm.cpp:639: error: (-209) The operation is neither 'array op array' (where arrays have the same size and the same number of channels), nor 'array op scalar', nor 'scalar op array' in function cv::arithm_op
+
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+LR 3900.46200731
+RR 7882.81903516
+LR 5167.5518407
+RR 3892.00461935
+LR 2055.41722124
+RR 1354.28014961
+LR 1082.97769157
+RR 254.852740953
+LR 2900.54031502
+RR 712.681283083
+LR 2331.74594683
+RR 300.593204965
+LR 2626.70224226
+RR 603.895587894
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFEFF7C43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Saving the line fit coefficients
+LR 11900.5116688
+RR 9026.16470016
+LR 5167.5518407
+RR 3892.00461935
+LR 2055.41722124
+RR 1354.28014961
+LR 1082.97769157
+RR 254.852740953
+LR 2900.54031502
+RR 712.681283083
+LR 2331.74594683
+RR 300.593204965
+LR 2626.70224226
+RR 603.895587894
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFEFF7C43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFF03BA43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFEFDCF43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFEFDCF43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+  File "test.py", line 197
+    (250, 680])
+             ^
+SyntaxError: invalid syntax
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFF048F43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+LR 23808.8351444
+RR 1074.34891637
+LR 5517.65152366
+RR 30269.0356052
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Traceback (most recent call last):
+  File "test.py", line 618, in <module>
+    pipelineTestImages(objpoints, imgpoints)
+  File "test.py", line 562, in pipelineTestImages
+    plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
+  File "test.py", line 272, in slidingWindow
+    right_fit = np.polyfit(right_y, right_x, 2)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\numpy\lib\polynomial.py", line 559, in polyfit
+    raise TypeError("expected non-empty vector for x")
+TypeError: expected non-empty vector for x
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Traceback (most recent call last):
+  File "test.py", line 618, in <module>
+    pipelineTestImages(objpoints, imgpoints)
+  File "test.py", line 552, in pipelineTestImages
+    undistorted_image = undistortImage(test_image, objpoints, imgpoints, True)
+  File "test.py", line 97, in undistortImage
+    figur2.tight_layout()
+NameError: name 'figur2' is not defined
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Traceback (most recent call last):
+  File "test.py", line 618, in <module>
+    pipelineTestImages(objpoints, imgpoints)
+  File "test.py", line 562, in pipelineTestImages
+    plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, True)
+  File "test.py", line 272, in slidingWindow
+    right_fit = np.polyfit(right_y, right_x, 2)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\numpy\lib\polynomial.py", line 559, in polyfit
+    raise TypeError("expected non-empty vector for x")
+TypeError: expected non-empty vector for x
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Saving the line fit coefficients
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFEFDCF43E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Saving the line fit coefficients
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Traceback (most recent call last):
+  File "test.py", line 635, in <module>
+    project_clip = project_clip.fl_image(pipelineVideo)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\video\VideoClip.py", line 514, in fl_image
+    return self.fl(lambda gf, t: image_func(gf(t)), apply_to)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\Clip.py", line 136, in fl
+    newclip = self.set_make_frame(lambda t: fun(self.get_frame, t))
+  File "<decorator-gen-57>", line 2, in set_make_frame
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\decorators.py", line 14, in outplace
+    f(newclip, *a, **k)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\video\VideoClip.py", line 654, in set_make_frame
+    self.size = self.get_frame(0).shape[:2][::-1]
+  File "<decorator-gen-14>", line 2, in get_frame
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\decorators.py", line 89, in wrapper
+    return f(*new_a, **new_kw)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\Clip.py", line 95, in get_frame
+    return self.make_frame(t)
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\Clip.py", line 136, in <lambda>
+    newclip = self.set_make_frame(lambda t: fun(self.get_frame, t))
+  File "C:\Users\443615\AppData\Local\Continuum\Anaconda2\envs\carnd-term1\lib\site-packages\moviepy\video\VideoClip.py", line 514, in <lambda>
+    return self.fl(lambda gf, t: image_func(gf(t)), apply_to)
+  File "test.py", line 605, in pipelineVideo
+    plot_y, left_fit_x, right_fit_x = slidingWindow(warped, False)
+ValueError: too many values to unpack (expected 3)
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+[MoviePy] >>>> Building video project_video_output.mp4
+[MoviePy] Writing video project_video_output.mp4
+100%|####################################################################################################################################################################8| 1260/1261 [03:45<00:00,  6.00it/s]
+[MoviePy] Done.
+[MoviePy] >>>> Video ready: project_video_output.mp4
+
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Saving the line fit coefficients
+13291.8550661
+1919.43994828
+1804.23315795
+13475.4260796
+2828.05040996
+4788.34977475
+2015.05741558
+300.098286029
+1676.17663348
+705.622962568
+1651.10855824
+571.072482751
+69850.5589676
+1570.79678752
+2344.92443356
+2776.08378917
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFF058843E4  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF370D6634  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF37C58102  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF3A2BC5B4  Unknown               Unknown  Unknown
+QObject::killTimers: timers cannot be stopped from another thread
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+Saving the line fit coefficients
+LR 13291.8550661
+RR 1919.43994827
+
+LR 1804.23315795
+RR 13475.4260796
+
+LR 2828.05040996
+RR 4788.34977475
+
+LR 2015.05741558
+RR 300.098286029
+
+LR 1676.17663348
+RR 705.622962568
+
+LR 1651.10855824
+RR 571.072482751
+
+LR 69850.5589671
+RR 1570.79678752
+
+LR 2344.92443356
+RR 2776.08378917
+
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>git add minimaltest.py
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>git add -A
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   line_fit_coefficients.p
+        modified:   test.py
+
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>python test.py
+LR 1806.61123777
+RR 547.643358118
+
+LR 5167.5518407
+RR 26008.9372695
+
+LR 2055.41722124
+RR 1375.57301887
+
+LR 1082.97769157
+RR 252.503888271
+
+LR 2900.54031502
+RR 704.503921246
+
+LR 1071.9971883
+RR 416.286165009
+
+LR 2331.74594683
+RR 300.344337907
+
+LR 2626.70224226
+RR 603.458905328
+
+
+(carnd-term1) C:\Users\443615\Documents\Personal\Nanodegree\SDC\Project4\Project4>

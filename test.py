@@ -94,7 +94,7 @@ def undistortImage(img, objpoints, imgpoints, display_images=False):
     if display_images == True:
         # Visualize undistortion
         figure2, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
-        figur2.tight_layout()
+        figure2.tight_layout()
 
         ax1.imshow(img)
         ax1.set_title('Original Image(S1)', fontsize=30)
@@ -184,19 +184,36 @@ def perspectiveTransform(img, display_images=False):
     # Get the image shape
     imshape = img.shape
 
-    # Source vertices(starting at top-left and going clockwise)
-    src_vertices = np.array([(600, 440),
-                             (680, 440),
-                             (1140, imshape[0]),
-                             (180, imshape[0])])
-    # Display area in focus(Optional)
-    areaInFocus(img, src_vertices, display_images)
+    udacity_set = False
+    
+    if udacity_set == True:
+        # Source vertices(starting at top-left and going clockwise)
+        src_vertices = np.array([(585, 460),
+                                 (695, 460),
+                                 (1127, 720),
+                                 (203, 720)])
+        # Display area in focus(Optional)
+        areaInFocus(img, src_vertices, display_images)
 
-    # Destination vertices to get perspectice(starting at top-left and going clockwise)
-    dst_vertices = np.array([[(200, -500),
-                              (1080, -500),
-                              (1080, imshape[0]),
-                              (200, imshape[0])]])
+        # Destination vertices to get perspectice(starting at top-left and going clockwise)
+        dst_vertices = np.array([(200, 0),
+                                 (960, 0),
+                                 (960, 720),
+                                 (200, 720)])
+    else:
+        # Source vertices(starting at top-left and going clockwise)
+        src_vertices = np.array([(600, 440),
+                                 (680, 440),
+                                 (1140, imshape[0]),
+                                 (180, imshape[0])])
+        # Display area in focus(Optional)
+        areaInFocus(img, src_vertices, True)
+
+        # Destination vertices to get perspectice(starting at top-left and going clockwise)
+        dst_vertices = np.array([[(200, -500),
+                                  (1080, -500),
+                                  (1080, imshape[0]),
+                                  (200, imshape[0])]])
 
     # Convert the indices into float
     src_vertices = np.float32(src_vertices)
@@ -280,11 +297,15 @@ def slidingWindow(img, display_images=False):
         line_fit_pickle["lA"] = left_fit[0]
         line_fit_pickle["lB"] = left_fit[1]
         line_fit_pickle["lC"] = left_fit[2]
+        line_fit_pickle["lx"] = left_x
+        line_fit_pickle["ly"] = left_y
 
         # Save the line fit of the right lines
         line_fit_pickle["rA"] = right_fit[0]
         line_fit_pickle["rB"] = right_fit[1]
         line_fit_pickle["rC"] = right_fit[2]
+        line_fit_pickle["rx"] = right_x
+        line_fit_pickle["ry"] = right_y
 
         pickle.dump(line_fit_pickle, open("line_fit_coefficients.p", "wb"))
 
@@ -448,11 +469,15 @@ def slidingWindow(img, display_images=False):
         line_fit_pickle["lA"] = left_fit[0]
         line_fit_pickle["lB"] = left_fit[1]
         line_fit_pickle["lC"] = left_fit[2]
+        line_fit_pickle["lx"] = left_x
+        line_fit_pickle["ly"] = left_y
 
         # Save the line fit of the right lines
         line_fit_pickle["rA"] = right_fit[0]
         line_fit_pickle["rB"] = right_fit[1]
         line_fit_pickle["rC"] = right_fit[2]
+        line_fit_pickle["rx"] = right_x
+        line_fit_pickle["ry"] = right_y
 
         pickle.dump(line_fit_pickle, open("line_fit_coefficients.p", "wb"))
 
@@ -506,14 +531,14 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
 
     # Define conversions in x and y from pixels space to meters
     ym_per_pix = 30/720 # meters per pixel in y dimension
-    xm_per_pix = 3.7/1280 # meters per pixel in x dimension
+    xm_per_pix = 3.7/800 # meters per pixel in x dimension
 
     # Since this where the ROI is captured
-    max_point = (1250/1280)*30
+    max_point = (20/720)*30
 
     # Fit new polynomials to x,y in world space
-    left_fit_cr = np.polyfit(plot_y*ym_per_pix, left_fit_x*xm_per_pix, 2)
-    right_fit_cr = np.polyfit(plot_y*ym_per_pix, right_fit_x*xm_per_pix, 2)
+    left_fit_cr = np.polyfit(line_fit_dict["ly"]*ym_per_pix, line_fit_dict["lx"]*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(line_fit_dict["ry"]*ym_per_pix, line_fit_dict["rx"]*xm_per_pix, 2)
 
     # Calculate the new radii of curvature
     left_radius = ((1 + (2*left_fit_cr[0]*max_point*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
@@ -522,6 +547,10 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
     # Now our radius of curvature is in meters
     # Calculate the mean of the two
     mean_radius = (left_radius + right_radius)/2
+    print("LR", left_radius)
+    print("RR", right_radius)
+    print()
+
     string_to_display = "Radius of curvature(m): " + str(mean_radius)
 
     # Display the text at the top left corner of the image, with hershey simplex,
@@ -555,11 +584,11 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(thresholded_image, False)
+            warped_image, Minv = perspectiveTransform(thresholded_image, True)
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
+            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, True)
 
             # Draw the lane
             drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
@@ -578,11 +607,11 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(thresholded_image, False)
+            warped_image, Minv = perspectiveTransform(thresholded_image, True)
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
+            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, True)
 
             # Draw the lane
             drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
@@ -602,10 +631,10 @@ def pipelineVideo(image):
     warped = np.copy(warped_image)
 
     # Apply sliding window
-    plot_y, left_fit_x, right_fit_x = slidingWindow(warped, False)
+    plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
 
     # Draw the lane
-    result = drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, False)
+    result = drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, False)
 
     return result
 
@@ -614,10 +643,13 @@ objpoints = []
 imgpoints = []
 objpoints, imgpoints = cameraCalibration()
 
+run = 1
 # Pipeline test on the images
-pipelineTestImages(objpoints, imgpoints)
 
-'''def debugRun():
+if run == 1:
+    pipelineTestImages(objpoints, imgpoints)
+
+def debugRun():
     project_output = 'project_video.mp4'
     project_clip = VideoFileClip("project_video.mp4")
     frameCount = 0
@@ -629,8 +661,9 @@ pipelineTestImages(objpoints, imgpoints)
 
 #debugRun()
 
-# Video to test on
-project_output = 'project_video_output.mp4'
-project_clip = VideoFileClip("project_video.mp4")
-project_clip = project_clip.fl_image(pipelineVideo)
-project_clip.write_videofile(project_output, audio=False)'''
+if run == 2:
+    # Video to test on
+    project_output = 'project_video_output.mp4'
+    project_clip = VideoFileClip("project_video.mp4")
+    project_clip = project_clip.fl_image(pipelineVideo)
+    project_clip.write_videofile(project_output, audio=False)

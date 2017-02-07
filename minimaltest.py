@@ -6,6 +6,7 @@ import matplotlib.image as mpimg
 import os
 import pickle
 
+# Old file
 def cameraCalibration(display_images=False):
     '''Add description'''
     # NOTE: The chessboard pattern used is not the standard chessboard of 8x8 squares
