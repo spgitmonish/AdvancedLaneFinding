@@ -9,39 +9,57 @@ from moviepy.editor import VideoFileClip
 from IPython.display import HTML
 
 def cameraCalibration(display_images=False):
-    '''Add description'''
-    # NOTE: The chessboard pattern used is not the standard chessboard of 8x8 squares
-    #       which have 7x7 internal corners(number black squares touching each other)
-    # Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-    objp = np.zeros((6*9,3), np.float32)
-    objp[:,:2] = np.mgrid[0:9, 0:6].T.reshape(-1,2)
-
-    # Arrays to store object points and image points from all the images.
-    # 3d points in real world space
-    # NOTE: (X,Y,Z) and points in Z-axis is all zeros
+    # 3D points in real world space
     objpoints = []
 
-    # Explanation: For X,Y values, we can simply pass the points as (0,0), (1,0), (2,0), ...
-    # which denotes the location of points. In this case, the results we get will
-    # be in the scale of size of chess board square. But if we know the square size,
-    # (say 30 mm), and we can pass the values as (0,0),(30,0),(60,0),...,
-    # we get the results in mm
-
-    # 2d points in image plane.
+    # 2D points in image plane.
     imgpoints = []
+
+    # Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
+    # The images may have different detected checker board dimensions!
+    # Currently, possible dimension combinations are: (9,6), (8,6), (9,5), (9,4) and (7,6)
+    objp1 = np.zeros((6*9,3), np.float32)
+    objp1[:,:2] = np.mgrid[0:9, 0:6].T.reshape(-1,2)
+    objp2 = np.zeros((6*8,3), np.float32)
+    objp2[:,:2] = np.mgrid[0:8, 0:6].T.reshape(-1,2)
+    objp3 = np.zeros((5*9,3), np.float32)
+    objp3[:,:2] = np.mgrid[0:9, 0:5].T.reshape(-1,2)
+    objp4 = np.zeros((4*9,3), np.float32)
+    objp4[:,:2] = np.mgrid[0:9, 0:4].T.reshape(-1,2)
+    objp5 = np.zeros((6*7,3), np.float32)
+    objp5[:,:2] = np.mgrid[0:7, 0:6].T.reshape(-1,2)
+    objp6 = np.zeros((6*5,3), np.float32)
+    objp6[:,:2] = np.mgrid[0:5, 0:6].T.reshape(-1,2)
 
     # Make a list of calibration images
     images = glob.glob('camera_cal/calibration*.jpg')
 
     # Step through the list and search for chessboard corners
     for idx, fname in enumerate(images):
-        img = mpimg.imread(fname)
-        # NOTE: Using mpimg for reading the image, so it is read
-        #       in RGB format
-        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        # Read the image
+        img = cv2.imread(fname)
 
-        # Find the chessboard corners on the grayscale image
+        # Convert to gray scale
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Find the chessboard corners using possible combinations of dimensions.
         ret, corners = cv2.findChessboardCorners(gray, (9,6), None)
+        objp = objp1
+        if not ret:
+            ret, corners = cv2.findChessboardCorners(gray, (8,6), None)
+            objp = objp2
+        if not ret:
+            ret, corners = cv2.findChessboardCorners(gray, (9,5), None)
+            objp = objp3
+        if not ret:
+            ret, corners = cv2.findChessboardCorners(gray, (9,4), None)
+            objp = objp4
+        if not ret:
+            ret, corners = cv2.findChessboardCorners(gray, (7,6), None)
+            objp = objp5
+        if not ret:
+            ret, corners = cv2.findChessboardCorners(gray, (5,6), None)
+            objp = objp6
 
         # If found, add object points, image points
         if ret == True:
@@ -50,10 +68,43 @@ def cameraCalibration(display_images=False):
 
             if display_images==True:
                 # Draw and display the corners
-                cv2.drawChessboardCorners(img, (9,6), corners, ret)
+                cv2.drawChessboardCorners(img, (corners.shape[1],corners.shape[0]), corners, ret)
                 figure1 = plt.figure()
                 plt.imshow(img)
                 plt.show()
+
+    # Pick a random image from the list
+    img = mpimg.imread('camera_cal/calibration2.jpg')
+
+    # NOTE: img.shape[0] is the width(columns) and img.shape[1] is the height(rows),
+    #       img.shape[2] is the number of channels(should be ignored)
+    img_size = (img.shape[1], img.shape[0])
+
+    # Do camera calibration given object points and image points
+    # NOTE: mtx - Camera matrix
+    #       dist - Distorting coeeficients
+    #       rvecs - Rotation Vectors for each pattern view
+    #       tvecs - Translation Vectors for each pattern view
+    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img_size, None, None)
+
+    # Undistort the image using the camera matrix obtained from calibration
+    # NOTE: The last parameter is the same as 2nd because the new camera matrix
+    #       should be the same as the source
+    undistorted_image = cv2.undistort(img, mtx, dist, None, mtx)
+
+    if display_images == True:
+        # Plot the result
+        figure100, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+        figure100.tight_layout()
+
+        ax1.imshow(img)
+        ax1.set_title('Original', fontsize=20)
+
+        ax2.imshow(undistorted_image)
+        ax2.set_title('Undistorted Image', fontsize=20)
+
+        plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
+        plt.show()
 
     # Return the object points and the image points
     return objpoints, imgpoints
@@ -144,14 +195,14 @@ def colorAndGradientThreshold(img, sx_thresh=(20, 120), s_thresh=(120, 220),
 
     if display_images == True:
         # Plot the result
-        figure3, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
+        figure3, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
         figure3.tight_layout()
 
         ax1.imshow(img)
-        ax1.set_title('Original Image(S2)', fontsize=40)
+        ax1.set_title('Original Image(S2)', fontsize=20)
 
         ax2.imshow(combined_binary, cmap="gray")
-        ax2.set_title('Color&Gradient Image', fontsize=40)
+        ax2.set_title('Color&Gradient Image', fontsize=20)
 
         plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
         plt.show()
@@ -160,32 +211,35 @@ def colorAndGradientThreshold(img, sx_thresh=(20, 120), s_thresh=(120, 220),
 
 def areaInFocus(img, vertices, display_images=False):
     # Convert the 2D Gray image into 3D image with all 1's set to 255
-    image_in_focus = np.dstack((img, img, img))*255
+    if img.shape[2]:
+        image_in_focus = np.copy(img)
+    else:
+        image_in_focus = np.dstack((img, img, img))*255
 
     # Filling pixels inside the polygon defined by "vertices" with the fill color
-    cv2.polylines(image_in_focus, [vertices], True, (255, 0, 0), 3, 4)
+    cv2.polylines(image_in_focus, np.int32([vertices]), True, (255, 0, 0), 3, 4)
 
     if display_images == True:
         # Plot the result
-        figure4, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
+        figure4, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
         figure4.tight_layout()
 
         ax1.imshow(img, cmap="gray")
-        ax1.set_title('Original Image(S3)', fontsize=40)
+        ax1.set_title('Original Image(S3)', fontsize=20)
 
         ax2.imshow(image_in_focus, cmap="gray")
-        ax2.set_title('Area in focus', fontsize=40)
+        ax2.set_title('Area in focus', fontsize=20)
 
         plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
         plt.show()
     return
 
-def perspectiveTransform(img, display_images=False):
+def perspectiveTransform(original, thresholded, display_images=False):
     # Get the image shape
-    imshape = img.shape
+    imshape = original.shape
 
-    udacity_set = False
-    
+    udacity_set = True
+
     if udacity_set == True:
         # Source vertices(starting at top-left and going clockwise)
         src_vertices = np.array([(585, 460),
@@ -193,7 +247,7 @@ def perspectiveTransform(img, display_images=False):
                                  (1127, 720),
                                  (203, 720)])
         # Display area in focus(Optional)
-        areaInFocus(img, src_vertices, display_images)
+        areaInFocus(original, src_vertices, display_images)
 
         # Destination vertices to get perspectice(starting at top-left and going clockwise)
         dst_vertices = np.array([(200, 0),
@@ -207,13 +261,13 @@ def perspectiveTransform(img, display_images=False):
                                  (1140, imshape[0]),
                                  (180, imshape[0])])
         # Display area in focus(Optional)
-        areaInFocus(img, src_vertices, True)
+        areaInFocus(original, src_vertices, display_images)
 
         # Destination vertices to get perspectice(starting at top-left and going clockwise)
-        dst_vertices = np.array([[(200, -500),
-                                  (1080, -500),
-                                  (1080, imshape[0]),
-                                  (200, imshape[0])]])
+        dst_vertices = np.array([(200, -500),
+                                 (1080, -500),
+                                 (1080, imshape[0]),
+                                 (200, imshape[0])])
 
     # Convert the indices into float
     src_vertices = np.float32(src_vertices)
@@ -227,18 +281,22 @@ def perspectiveTransform(img, display_images=False):
 
     # Warped image
     # NOTE: Pass in width and height(size of the image)
-    warped_image = cv2.warpPerspective(img, matrix, (imshape[1], imshape[0]))
+    warped_image = cv2.warpPerspective(thresholded, matrix, (imshape[1], imshape[0]))
+    original_warped = cv2.warpPerspective(original, matrix, (imshape[1], imshape[0]))
+
+    # Display area in focus after warping
+    areaInFocus(original_warped, dst_vertices, display_images)
 
     if display_images == True:
         # Plot the result
-        figure5, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
+        figure5, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
         figure5.tight_layout()
 
-        ax1.imshow(img, cmap="gray")
-        ax1.set_title('Original Image(S4)', fontsize=40)
+        ax1.imshow(thresholded, cmap="gray")
+        ax1.set_title('Original Image(S4)', fontsize=20)
 
         ax2.imshow(warped_image, cmap="gray")
-        ax2.set_title('Warped Image', fontsize=40)
+        ax2.set_title('Warped Image', fontsize=20)
 
         plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
         plt.show()
@@ -429,14 +487,14 @@ def slidingWindow(img, display_images=False):
 
         if display_images == True:
             # Plot the result
-            figure7, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
+            figure7, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
             figure7.tight_layout()
 
             ax1.imshow(img, cmap="gray")
-            ax1.set_title('Original Image(S5)', fontsize=40)
+            ax1.set_title('Original Image(S5)', fontsize=20)
 
             ax2.imshow(output_image)
-            ax2.set_title('Sliding Window Image', fontsize=40)
+            ax2.set_title('Sliding Window Image', fontsize=20)
 
             plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
             plt.show()
@@ -547,11 +605,16 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
     # Now our radius of curvature is in meters
     # Calculate the mean of the two
     mean_radius = (left_radius + right_radius)/2
-    print("LR", left_radius)
-    print("RR", right_radius)
-    print()
 
-    string_to_display = "Radius of curvature(m): " + str(mean_radius)
+    if 0:
+        print("LR", left_radius)
+        print("RR", right_radius)
+        print()
+
+    if(mean_radius > 3000):
+        string_to_display = "Radius of curvature(m): Road is nearly straight"
+    else:
+        string_to_display = "Radius of curvature(m): " + str(mean_radius)
 
     # Display the text at the top left corner of the image, with hershey simplex,
     # font size as 3, in white, thickness of 2 and line type AA
@@ -584,7 +647,7 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(thresholded_image, True)
+            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, True)
             warped = np.copy(warped_image)
 
             # Apply sliding window
@@ -607,7 +670,7 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(thresholded_image, True)
+            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, True)
             warped = np.copy(warped_image)
 
             # Apply sliding window
@@ -627,7 +690,7 @@ def pipelineVideo(image):
     thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
     # Get the perspective transform of the image
-    warped_image, Minv = perspectiveTransform(thresholded_image, False)
+    warped_image, Minv = perspectiveTransform(test_image, thresholded_image, False)
     warped = np.copy(warped_image)
 
     # Apply sliding window
@@ -643,7 +706,7 @@ objpoints = []
 imgpoints = []
 objpoints, imgpoints = cameraCalibration()
 
-run = 1
+run = 2
 # Pipeline test on the images
 
 if run == 1:
