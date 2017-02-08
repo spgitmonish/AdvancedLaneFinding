@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import os
 import pickle
+from line import Line
 from moviepy.editor import VideoFileClip
 from IPython.display import HTML
 
@@ -18,18 +19,18 @@ def cameraCalibration(display_images=False):
     # Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
     # The images may have different detected checker board dimensions!
     # Currently, possible dimension combinations are: (9,6), (8,6), (9,5), (9,4) and (7,6)
-    objp1 = np.zeros((6*9,3), np.float32)
-    objp1[:,:2] = np.mgrid[0:9, 0:6].T.reshape(-1,2)
-    objp2 = np.zeros((6*8,3), np.float32)
-    objp2[:,:2] = np.mgrid[0:8, 0:6].T.reshape(-1,2)
-    objp3 = np.zeros((5*9,3), np.float32)
-    objp3[:,:2] = np.mgrid[0:9, 0:5].T.reshape(-1,2)
-    objp4 = np.zeros((4*9,3), np.float32)
-    objp4[:,:2] = np.mgrid[0:9, 0:4].T.reshape(-1,2)
-    objp5 = np.zeros((6*7,3), np.float32)
-    objp5[:,:2] = np.mgrid[0:7, 0:6].T.reshape(-1,2)
-    objp6 = np.zeros((6*5,3), np.float32)
-    objp6[:,:2] = np.mgrid[0:5, 0:6].T.reshape(-1,2)
+    objp_set1 = np.zeros((6*9,3), np.float32)
+    objp_set1[:,:2] = np.mgrid[0:9, 0:6].T.reshape(-1,2)
+    objp_set2 = np.zeros((6*8,3), np.float32)
+    objp_set2[:,:2] = np.mgrid[0:8, 0:6].T.reshape(-1,2)
+    objp_set3 = np.zeros((5*9,3), np.float32)
+    objp_set3[:,:2] = np.mgrid[0:9, 0:5].T.reshape(-1,2)
+    objp_set4 = np.zeros((4*9,3), np.float32)
+    objp_set4[:,:2] = np.mgrid[0:9, 0:4].T.reshape(-1,2)
+    objp_set5 = np.zeros((6*7,3), np.float32)
+    objp_set5[:,:2] = np.mgrid[0:7, 0:6].T.reshape(-1,2)
+    objp_set6 = np.zeros((6*5,3), np.float32)
+    objp_set6[:,:2] = np.mgrid[0:5, 0:6].T.reshape(-1,2)
 
     # Make a list of calibration images
     images = glob.glob('camera_cal/calibration*.jpg')
@@ -44,22 +45,22 @@ def cameraCalibration(display_images=False):
 
         # Find the chessboard corners using possible combinations of dimensions.
         ret, corners = cv2.findChessboardCorners(gray, (9,6), None)
-        objp = objp1
-        if not ret:
+        objp = objp_set1
+        if ret == False:
             ret, corners = cv2.findChessboardCorners(gray, (8,6), None)
-            objp = objp2
-        if not ret:
+            objp = objp_set2
+        if ret == False:
             ret, corners = cv2.findChessboardCorners(gray, (9,5), None)
-            objp = objp3
-        if not ret:
+            objp = objp_set3
+        if ret == False:
             ret, corners = cv2.findChessboardCorners(gray, (9,4), None)
-            objp = objp4
-        if not ret:
+            objp = objp_set4
+        if ret == False:
             ret, corners = cv2.findChessboardCorners(gray, (7,6), None)
-            objp = objp5
-        if not ret:
+            objp = objp_set5
+        if ret == False:
             ret, corners = cv2.findChessboardCorners(gray, (5,6), None)
-            objp = objp6
+            objp = objp_set6
 
         # If found, add object points, image points
         if ret == True:
@@ -303,106 +304,10 @@ def perspectiveTransform(original, thresholded, display_images=False):
 
     return warped_image, Minv
 
-def slidingWindow(img, display_images=False):
+def slidingWindow(img, line_tracking, averaging_threshold, display_images=False):
     '''Add comments'''
-    try:
-        # Load the pickle file if it exists
-        line_fit_pickle = pickle.load(open("line_fit_coefficients.p", "rb"))
-
-        left_fit = np.array([0.0, 0.0, 0.0])
-        right_fit = np.array([0.0, 0.0, 0.0])
-
-        # Save the line fit of the left lines
-        left_fit[0] = line_fit_pickle["lA"]
-        left_fit[1] = line_fit_pickle["lB"]
-        left_fit[2] = line_fit_pickle["lC"]
-
-        # Save the line fit of the right lines
-        right_fit[0] = line_fit_pickle["rA"]
-        right_fit[1] = line_fit_pickle["rB"]
-        right_fit[2] = line_fit_pickle["rC"]
-
-        # Get the non-zero values of the image
-        nonzero = img.nonzero()
-        nonzero_y = np.array(nonzero[0])
-        nonzero_x = np.array(nonzero[1])
-
-        # Width of the window
-        margin = 100
-
-        # Find the left and right lane indices within a margin specified
-        left_lane_indices = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
-                             (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
-        right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
-                              (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
-
-        # Again, extract left and right line pixel positions
-        left_x = nonzero_x[left_lane_indices]
-        left_y = nonzero_y[left_lane_indices]
-        right_x = nonzero_x[right_lane_indices]
-        right_y = nonzero_y[right_lane_indices]
-
-        # Fit a second order polynomial to each
-        left_fit = np.polyfit(left_y, left_x, 2)
-        right_fit = np.polyfit(right_y, right_x, 2)
-
-        # Generate x and y values for plotting
-        plot_y = np.linspace(0, img.shape[0]-1, img.shape[0] )
-        left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
-        right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
-
-        # Save the line fit of the left lines
-        line_fit_pickle["lA"] = left_fit[0]
-        line_fit_pickle["lB"] = left_fit[1]
-        line_fit_pickle["lC"] = left_fit[2]
-        line_fit_pickle["lx"] = left_x
-        line_fit_pickle["ly"] = left_y
-
-        # Save the line fit of the right lines
-        line_fit_pickle["rA"] = right_fit[0]
-        line_fit_pickle["rB"] = right_fit[1]
-        line_fit_pickle["rC"] = right_fit[2]
-        line_fit_pickle["rx"] = right_x
-        line_fit_pickle["ry"] = right_y
-
-        pickle.dump(line_fit_pickle, open("line_fit_coefficients.p", "wb"))
-
-        # Create an image to draw on and an image to show the selection window
-        output_image = np.dstack((img, img, img))*255
-        window_image = np.zeros_like(output_image)
-
-        # Color in left and right line pixels
-        output_image[nonzero_y[left_lane_indices], nonzero_x[left_lane_indices]] = [255, 0, 0]
-        output_image[nonzero_y[right_lane_indices], nonzero_x[right_lane_indices]] = [0, 0, 255]
-
-        # Generate a polygon to illustrate the search window area
-        # And recast the x and y points into usable format for cv2.fillPoly()
-        left_line_window1 = np.array([np.transpose(np.vstack([left_fit_x-margin, plot_y]))])
-        left_line_window2 = np.array([np.flipud(np.transpose(np.vstack([left_fit_x+margin, plot_y])))])
-        left_line_pts = np.hstack((left_line_window1, left_line_window2))
-
-        right_line_window1 = np.array([np.transpose(np.vstack([right_fit_x-margin, plot_y]))])
-        right_line_window2 = np.array([np.flipud(np.transpose(np.vstack([right_fit_x+margin, plot_y])))])
-        right_line_pts = np.hstack((right_line_window1, right_line_window2))
-
-        # Draw the lane onto the warped blank image
-        if display_images == True:
-            cv2.fillPoly(window_image, np.int_([left_line_pts]), (0,255, 0))
-            cv2.fillPoly(window_image, np.int_([right_line_pts]), (0,255, 0))
-            result = cv2.addWeighted(output_image, 1, window_image, 0.3, 0)
-            figure6 = plt.figure()
-
-            # Plot the lines
-            plt.plot(left_fit_x, plot_y, color='yellow')
-            plt.plot(right_fit_x, plot_y, color='yellow')
-            plt.xlim(0, 1280)
-            plt.ylim(720, 0)
-            plt.imshow(result)
-            plt.title("Sliding Window Image")
-            plt.show()
-
-        return plot_y, left_fit_x, right_fit_x, line_fit_pickle
-    except(OSError, IOError) as e:
+    # NOTE: In python a reference to the object is passed in as a parameter
+    if np.any(line_tracking.most_recent_fit) == False:
         # Assuming you have created a warped binary image called "img"
         # Take a histogram of the bottom half of the image
         histogram = np.sum(img[img.shape[0]/4:,:], axis=0)
@@ -479,7 +384,7 @@ def slidingWindow(img, display_images=False):
 
             # If there were more than 50 pixels found in the window, recenter the window
             # for the next iteration. So if pixels are leaning left then recenter the window
-            # for the next iteration to the left or vice versa
+            # for the next iteration to the left and vice versa
             if len(good_left_indices) > minimum_pixels:
                 left_current_x = np.int(np.mean(nonzero_x[good_left_indices]))
             if len(good_right_indices) > minimum_pixels:
@@ -520,26 +425,20 @@ def slidingWindow(img, display_images=False):
         left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
         right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
 
-        # Save the camera calibration result for later use (we won't worry about rvecs / tvecs)
-        line_fit_pickle = {}
+        # Populate the Line object with the first time fit information
+        # Most recent fit(store plot_y to avoid data generation everytime)
+        line_tracking.most_recent_fit = [left_fit, right_fit]
 
-        # Save the line fit of the left lines
-        line_fit_pickle["lA"] = left_fit[0]
-        line_fit_pickle["lB"] = left_fit[1]
-        line_fit_pickle["lC"] = left_fit[2]
-        line_fit_pickle["lx"] = left_x
-        line_fit_pickle["ly"] = left_y
+        # x and y values for detected line pixels
+        line_tracking.all_x = [left_x, right_x]
+        line_tracking.all_y = [left_y, right_y]
 
-        # Save the line fit of the right lines
-        line_fit_pickle["rA"] = right_fit[0]
-        line_fit_pickle["rB"] = right_fit[1]
-        line_fit_pickle["rC"] = right_fit[2]
-        line_fit_pickle["rx"] = right_x
-        line_fit_pickle["ry"] = right_y
+        # Recent coefficients for left and right lanes
+        line_tracking.recent_fitted.append([left_fit, right_fit])
 
-        pickle.dump(line_fit_pickle, open("line_fit_coefficients.p", "wb"))
-
-        print("Saving the line fit coefficients")
+        # Increment the count which will be later used for threshold detection
+        # for averaging
+        line_tracking.threshold_count = line_tracking.threshold_count + 1
 
         # Draw the lane onto the warped blank image
         if display_images == True:
@@ -556,9 +455,182 @@ def slidingWindow(img, display_images=False):
             plt.imshow(output_image)
             plt.title("Sliding Window Image")
 
-        return plot_y, left_fit_x, right_fit_x, line_fit_pickle
+        # Return the values
+        return plot_y, left_fit_x, right_fit_x, line_tracking
+    else:
+        # If there is a best fit then use calculate the average till there is a
+        # best fit calculation
+        if line_tracking.best_fit_left == None and line_tracking.best_fit_right == None:
+            # Line fit for current iteration
+            left_fit = np.array([0.0, 0.0, 0.0])
+            right_fit = np.array([0.0, 0.0, 0.0])
 
-def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, display_images=False):
+            # Get the line fit information for left and right lanes
+            left_fit[0] = line_tracking.most_recent_fit[0][0]
+            left_fit[1] = line_tracking.most_recent_fit[0][1]
+            left_fit[2] = line_tracking.most_recent_fit[0][2]
+
+            right_fit[0] = line_tracking.most_recent_fit[1][0]
+            right_fit[1] = line_tracking.most_recent_fit[1][1]
+            right_fit[2] = line_tracking.most_recent_fit[1][2]
+
+            # Get the non-zero values of the image
+            nonzero = img.nonzero()
+            nonzero_y = np.array(nonzero[0])
+            nonzero_x = np.array(nonzero[1])
+
+            # Width of the window
+            margin = 100
+
+            # Find the left and right lane indices within a margin specified
+            left_lane_indices = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
+                                 (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
+            right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
+                                  (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
+
+            # Again, extract left and right line pixel positions
+            left_x = nonzero_x[left_lane_indices]
+            left_y = nonzero_y[left_lane_indices]
+            right_x = nonzero_x[right_lane_indices]
+            right_y = nonzero_y[right_lane_indices]
+
+            # Fit a second order polynomial to each
+            left_fit = np.polyfit(left_y, left_x, 2)
+            right_fit = np.polyfit(right_y, right_x, 2)
+
+            # Generate x and y values for plotting
+            plot_y = np.linspace(0, img.shape[0]-1, img.shape[0] )
+            left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
+            right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
+
+            # Populate the Line object with the first time fit information
+            # Most recent fit(store plot_y to avoid data generation everytime)
+            line_tracking.most_recent_fit = [left_fit, right_fit]
+
+            # x and y values for the recent detected line pixels
+            line_tracking.all_x = [left_x, right_x]
+            line_tracking.all_y = [left_y, right_y]
+
+            # Recent X fits for left and right lanes
+            line_tracking.recent_fitted.append([left_fit, right_fit])
+
+            # Increment the count which will be later used for threshold detection
+            line_tracking.threshold_count = line_tracking.threshold_count + 1
+
+            # Check to see if the threshold has been met, if so, then compute
+            # the average best fit
+            if line_tracking.threshold_count >= averaging_threshold:
+                best_fit_left = np.array([0.0, 0.0, 0.0])
+                best_fit_right = np.array([0.0, 0.0, 0.0])
+
+                # Go through the list of recent fits
+                for index in range(0, len(line_tracking.recent_fitted)):
+                    # Get the coefficient values of each of the left and right tracks
+                    for coefficient in range(0, 3):
+                        best_fit_left[coefficient] = best_fit_left[coefficient] + line_tracking.recent_fitted[index][0][coefficient]
+                        best_fit_right[coefficient] = best_fit_right[coefficient] + line_tracking.recent_fitted[index][1][coefficient]
+
+                # Find the average for each of the coefficients
+                for coefficient in range(0, 3):
+                    best_fit_left[coefficient] = best_fit_left[coefficient]/len(line_tracking.recent_fitted)
+                    best_fit_right[coefficient] = best_fit_right[coefficient]/len(line_tracking.recent_fitted)
+
+                # Store the values back into the object
+                line_tracking.best_fit_left = best_fit_left
+                line_tracking.best_fit_right = best_fit_right
+
+        # If there is a best fit then use this algorithm
+        else:
+            # Line fit for current iteration
+            left_fit = np.array([0.0, 0.0, 0.0])
+            right_fit = np.array([0.0, 0.0, 0.0])
+
+            # Get the line fit information for left and right lanes
+            left_fit[0] = line_tracking.best_fit_left[0]
+            left_fit[1] = line_tracking.best_fit_left[1]
+            left_fit[2] = line_tracking.best_fit_left[2]
+
+            right_fit[0] = line_tracking.best_fit_right[0]
+            right_fit[1] = line_tracking.best_fit_right[1]
+            right_fit[2] = line_tracking.best_fit_right[2]
+
+            # Get the non-zero values of the image
+            nonzero = img.nonzero()
+            nonzero_y = np.array(nonzero[0])
+            nonzero_x = np.array(nonzero[1])
+
+            # Width of the window
+            margin = 100
+
+            # Find the left and right lane indices within a margin specified
+            left_lane_indices = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
+                                 (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
+            right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
+                                  (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
+
+            # Again, extract left and right line pixel positions
+            left_x = nonzero_x[left_lane_indices]
+            left_y = nonzero_y[left_lane_indices]
+            right_x = nonzero_x[right_lane_indices]
+            right_y = nonzero_y[right_lane_indices]
+
+            # Fit a second order polynomial to each
+            left_fit = np.polyfit(left_y, left_x, 2)
+            right_fit = np.polyfit(right_y, right_x, 2)
+
+            # Generate x and y values for plotting
+            plot_y = np.linspace(0, img.shape[0]-1, img.shape[0] )
+            left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
+            right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
+
+            # Populate the Line object with the first time fit information
+            # Most recent fit(store plot_y to avoid data generation everytime)
+            line_tracking.most_recent_fit = [left_fit, right_fit]
+
+            # x and y values for the recent detected line pixels
+            line_tracking.all_x = [left_x, right_x]
+            line_tracking.all_y = [left_y, right_y]
+
+            # NOTE: Need to add code which calculates that the new fit did well
+            #       by itself and needs to be added to the last n
+
+        # Create an image to draw on and an image to show the selection window
+        output_image = np.dstack((img, img, img))*255
+        window_image = np.zeros_like(output_image)
+
+        # Color in left and right line pixels
+        output_image[nonzero_y[left_lane_indices], nonzero_x[left_lane_indices]] = [255, 0, 0]
+        output_image[nonzero_y[right_lane_indices], nonzero_x[right_lane_indices]] = [0, 0, 255]
+
+        # Generate a polygon to illustrate the search window area
+        # And recast the x and y points into usable format for cv2.fillPoly()
+        left_line_window1 = np.array([np.transpose(np.vstack([left_fit_x-margin, plot_y]))])
+        left_line_window2 = np.array([np.flipud(np.transpose(np.vstack([left_fit_x+margin, plot_y])))])
+        left_line_pts = np.hstack((left_line_window1, left_line_window2))
+
+        right_line_window1 = np.array([np.transpose(np.vstack([right_fit_x-margin, plot_y]))])
+        right_line_window2 = np.array([np.flipud(np.transpose(np.vstack([right_fit_x+margin, plot_y])))])
+        right_line_pts = np.hstack((right_line_window1, right_line_window2))
+
+        # Draw the lane onto the warped blank image
+        if display_images == True:
+            cv2.fillPoly(window_image, np.int_([left_line_pts]), (0,255, 0))
+            cv2.fillPoly(window_image, np.int_([right_line_pts]), (0,255, 0))
+            result = cv2.addWeighted(output_image, 1, window_image, 0.3, 0)
+            figure6 = plt.figure()
+
+            # Plot the lines
+            plt.plot(left_fit_x, plot_y, color='yellow')
+            plt.plot(right_fit_x, plot_y, color='yellow')
+            plt.xlim(0, 1280)
+            plt.ylim(720, 0)
+            plt.imshow(result)
+            plt.title("Sliding Window Image")
+            plt.show()
+
+        return plot_y, left_fit_x, right_fit_x, line_tracking
+
+def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, display_images=False):
     # Create an image to draw the lines on
     warp_zero = np.zeros_like(warped).astype(np.uint8)
     color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
@@ -595,8 +667,8 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
     max_point = (20/720)*30
 
     # Fit new polynomials to x,y in world space
-    left_fit_cr = np.polyfit(line_fit_dict["ly"]*ym_per_pix, line_fit_dict["lx"]*xm_per_pix, 2)
-    right_fit_cr = np.polyfit(line_fit_dict["ry"]*ym_per_pix, line_fit_dict["rx"]*xm_per_pix, 2)
+    left_fit_cr = np.polyfit(line_tracking.all_y[0]*ym_per_pix, line_tracking.all_x[0]*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(line_tracking.all_y[1]*ym_per_pix, line_tracking.all_x[1]*xm_per_pix, 2)
 
     # Calculate the new radii of curvature
     left_radius = ((1 + (2*left_fit_cr[0]*max_point*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
@@ -606,7 +678,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
     # Calculate the mean of the two
     mean_radius = (left_radius + right_radius)/2
 
-    if 0:
+    if display_images:
         print("LR", left_radius)
         print("RR", right_radius)
         print()
@@ -628,7 +700,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, 
 
     return result_copy
 
-def pipelineTestImages(objpoints, imgpoints):
+def pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold):
     # Undistort the image(needs to go in the pipeline)
 
     # Make a list of calibration images
@@ -647,14 +719,14 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, True)
+            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, False)
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, True)
+            plot_y, left_fit_x, right_fit_x, line_tracking = slidingWindow(warped, line_tracking, averaging_threshold, False)
 
             # Draw the lane
-            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
+            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, True)
 
     # Set 2
     test_images = glob.glob('test_images/test*.jpg')
@@ -670,16 +742,20 @@ def pipelineTestImages(objpoints, imgpoints):
             thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=False)
 
             # Get the perspective transform of the image
-            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, True)
+            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, False)
             warped = np.copy(warped_image)
 
             # Apply sliding window
-            plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, True)
+            plot_y, left_fit_x, right_fit_x, line_tracking = slidingWindow(warped, line_tracking, averaging_threshold, False)
 
             # Draw the lane
-            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, True)
+            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, True)
 
 def pipelineVideo(image):
+    # The following two variables are globals as it can't be passed in as a parameter
+    global line_tracking
+    global averaging_threshold
+
     # Get the image to test
     test_image = image
 
@@ -694,10 +770,10 @@ def pipelineVideo(image):
     warped = np.copy(warped_image)
 
     # Apply sliding window
-    plot_y, left_fit_x, right_fit_x, line_fit_dict = slidingWindow(warped, False)
+    plot_y, left_fit_x, right_fit_x, line_tracking = slidingWindow(warped, line_tracking, averaging_threshold, False)
 
     # Draw the lane
-    result = drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_fit_dict, False)
+    result = drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, False)
 
     return result
 
@@ -706,11 +782,15 @@ objpoints = []
 imgpoints = []
 objpoints, imgpoints = cameraCalibration()
 
-run = 2
-# Pipeline test on the images
+# Create a Line object from the Line() class(use default values)
+line_tracking = Line()
+averaging_threshold = 5
 
+run = 2
+
+# Pipeline test on the images
 if run == 1:
-    pipelineTestImages(objpoints, imgpoints)
+    pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
 
 def debugRun():
     project_output = 'project_video.mp4'
