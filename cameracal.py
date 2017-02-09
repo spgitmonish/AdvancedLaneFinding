@@ -6,6 +6,13 @@ import matplotlib.image as mpimg
 import pickle
 
 def cameraCalibration(display_images=False):
+    ''' Description: Calibrates the camera on the chessboard images provided
+
+        Inputs: display_images - When set to True displays images using pyplot
+
+        Outputs: objpoints - 3d Object points from chessboard corner detection
+                 imgpoints - 2d Image points from chessboard corner detection
+    '''
     # 3D points in real world space
     objpoints = []
 
@@ -13,8 +20,8 @@ def cameraCalibration(display_images=False):
     imgpoints = []
 
     # Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-    # The images may have different detected checker board dimensions!
-    # Currently, possible dimension combinations are: (9,6), (8,6), (9,5), (9,4) and (7,6)
+    # NOTE: These following combinations are tried to capture the corners on
+    #       all the chessboard images provided
     objp_set1 = np.zeros((6*9,3), np.float32)
     objp_set1[:,:2] = np.mgrid[0:9, 0:6].T.reshape(-1,2)
     objp_set2 = np.zeros((6*8,3), np.float32)
@@ -34,12 +41,12 @@ def cameraCalibration(display_images=False):
     # Step through the list and search for chessboard corners
     for idx, fname in enumerate(images):
         # Read the image
-        img = cv2.imread(fname)
+        img = mpimg.imread(fname)
 
         # Convert to gray scale
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
-        # Find the chessboard corners using possible combinations of dimensions.
+        # Find the chessboard corners using various combinations
         ret, corners = cv2.findChessboardCorners(gray, (9,6), None)
         objp = objp_set1
         if ret == False:
@@ -58,7 +65,7 @@ def cameraCalibration(display_images=False):
             ret, corners = cv2.findChessboardCorners(gray, (5,6), None)
             objp = objp_set6
 
-        # If found, add object points, image points
+        # If corners were found, append object points & image points
         if ret == True:
             objpoints.append(objp)
             imgpoints.append(corners)
@@ -91,8 +98,8 @@ def cameraCalibration(display_images=False):
 
     if display_images == True:
         # Plot the result
-        figure100, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
-        figure100.tight_layout()
+        figure2, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+        figure2.tight_layout()
 
         ax1.imshow(img)
         ax1.set_title('Original', fontsize=20)
@@ -107,7 +114,15 @@ def cameraCalibration(display_images=False):
     return objpoints, imgpoints
 
 def undistortImage(img, objpoints, imgpoints, display_images=False):
-    '''Add comments'''
+    ''' Description: Undistorts the image using the object and image points
+
+        Inputs: img - Image to be undistorted
+                objpoints - 3d Object points from chessboard corner detection
+                imgpoints - 2d Image points from chessboard corner detection
+                display_images - When set to True displays images using pyplot
+
+        Outputs: undistorted_image - Undistorted image
+    '''
     # If the pickle exists load the camera matrix(focal points and camera center)
     # and also load the distortion coefficients to undistort the image
     try:
@@ -141,8 +156,8 @@ def undistortImage(img, objpoints, imgpoints, display_images=False):
 
     if display_images == True:
         # Visualize undistortion
-        figure2, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
-        figure2.tight_layout()
+        figure3, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
+        figure3.tight_layout()
 
         ax1.imshow(img)
         ax1.set_title('Original Image(S1)', fontsize=30)

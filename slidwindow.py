@@ -3,19 +3,34 @@ import cv2
 import matplotlib.pyplot as plt
 
 def slidingWindow(img, line_tracking, averaging_threshold, display_images=False):
-    '''Add comments'''
-    # NOTE: In python a reference to the object is passed in as a parameter
+    ''' Description: The core engine of the pipeline which detects the lines in
+                     3 phases -
+                     1. Sliding Window
+                     2. Search Window around previous search(till threshold)
+                     3. Mean Search Window(Low Pass Filter to smooth detection)
+
+        Inputs: img - Image to apply lane detection on
+                line_tracking - Object of type 'Line' for tracking detections
+                averaging_threshold - Threshold for going from phase 2->3(above)
+                display_images - When set to True displays images using pyplot
+
+        Outputs: plot_y - Points along y-axis
+                 left_fit_x - Left Lane x-axis points
+                 right_fit_x - Right lane x-axis points
+                 line_tracking - Modified object with new values
+    '''
+    # Phase 1
     if np.any(line_tracking.most_recent_fit) == False:
-        # Assuming you have created a warped binary image called "img"
         # Take a histogram of the bottom half of the image
         histogram = np.sum(img[img.shape[0]/4:,:], axis=0)
         if display_images == True:
-            figure2 = plt.figure()
+            figure7 = plt.figure()
             plt.plot(histogram)
             plt.title("Histogram of intensities")
             plt.show()
 
         # Create an output image to draw on and  visualize the result
+        # NOTE: The input image is in gray scale(so only 1 channel)
         output_image = np.dstack((img, img, img))*255
 
         # Find the peak of the left and right halves of the histogram
@@ -80,9 +95,10 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             left_lane_indices.append(good_left_indices)
             right_lane_indices.append(good_right_indices)
 
-            # If there were more than 50 pixels found in the window, recenter the window
-            # for the next iteration. So if pixels are leaning left then recenter the window
-            # for the next iteration to the left and vice versa
+            # If there were more than 50 pixels found in the window, recenter
+            # the window for the next iteration.
+            # NOTE: If pixels are leaning left then recenter the window
+            #       for the next iteration to the left and vice versa
             if len(good_left_indices) > minimum_pixels:
                 left_current_x = np.int(np.mean(nonzero_x[good_left_indices]))
             if len(good_right_indices) > minimum_pixels:
@@ -90,8 +106,8 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
 
         if display_images == True:
             # Plot the result
-            figure7, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
-            figure7.tight_layout()
+            figure8, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+            figure8.tight_layout()
 
             ax1.imshow(img, cmap="gray")
             ax1.set_title('Original Image(S5)', fontsize=20)
@@ -123,8 +139,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
         left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
         right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
 
-        # Populate the Line object with the first time fit information
-        # Most recent fit(store plot_y to avoid data generation everytime)
+        # Most recent fit
         line_tracking.most_recent_fit = [left_fit, right_fit]
 
         # x and y values for detected line pixels
@@ -143,7 +158,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             # Color the pixels with the indices with red and blue
             output_image[left_y, left_x] = [255, 0, 0]
             output_image[right_y, right_x] = [0, 0, 255]
-            figure8 = plt.figure()
+            figure9 = plt.figure()
 
             # Plot the x and y values based on the equation
             plt.plot(left_fit_x, plot_y, color='yellow')
@@ -155,9 +170,10 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
 
         # Return the values
         return plot_y, left_fit_x, right_fit_x, line_tracking
+    # Phase 2
     else:
-        # If there is a best fit then use calculate the average till there is a
-        # best fit calculation
+        # If there is no best fit calculated yet then use the most recent fit
+        # for detecting the lanes using search windows from previous detection
         if line_tracking.best_fit_left == None and line_tracking.best_fit_right == None:
             # Line fit for current iteration
             left_fit = np.array([0.0, 0.0, 0.0])
@@ -186,7 +202,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
                                   (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
-            # Again, extract left and right line pixel positions
+            # Extract left and right line pixel positions
             left_x = nonzero_x[left_lane_indices]
             left_y = nonzero_y[left_lane_indices]
             right_x = nonzero_x[right_lane_indices]
@@ -201,8 +217,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
             right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
 
-            # Populate the Line object with the first time fit information
-            # Most recent fit(store plot_y to avoid data generation everytime)
+            # Most recent fit
             line_tracking.most_recent_fit = [left_fit, right_fit]
 
             # x and y values for the recent detected line pixels
@@ -216,7 +231,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             line_tracking.threshold_count = line_tracking.threshold_count + 1
 
             # Check to see if the threshold has been met, if so, then compute
-            # the average best fit
+            # the average best fit which will get things to Phase 3
             if line_tracking.threshold_count >= averaging_threshold:
                 best_fit_left = np.array([0.0, 0.0, 0.0])
                 best_fit_right = np.array([0.0, 0.0, 0.0])
@@ -237,7 +252,41 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
                 line_tracking.best_fit_left = best_fit_left
                 line_tracking.best_fit_right = best_fit_right
 
-        # If there is a best fit then use this algorithm
+            # Create an image to draw on and an image to show the selection window
+            output_image = np.dstack((img, img, img))*255
+            window_image = np.zeros_like(output_image)
+
+            # Color in left and right line pixels
+            output_image[nonzero_y[left_lane_indices], nonzero_x[left_lane_indices]] = [255, 0, 0]
+            output_image[nonzero_y[right_lane_indices], nonzero_x[right_lane_indices]] = [0, 0, 255]
+
+            # Generate a polygon to illustrate the search window area
+            # And recast the x and y points into usable format for cv2.fillPoly()
+            left_line_window1 = np.array([np.transpose(np.vstack([left_fit_x-margin, plot_y]))])
+            left_line_window2 = np.array([np.flipud(np.transpose(np.vstack([left_fit_x+margin, plot_y])))])
+            left_line_pts = np.hstack((left_line_window1, left_line_window2))
+
+            right_line_window1 = np.array([np.transpose(np.vstack([right_fit_x-margin, plot_y]))])
+            right_line_window2 = np.array([np.flipud(np.transpose(np.vstack([right_fit_x+margin, plot_y])))])
+            right_line_pts = np.hstack((right_line_window1, right_line_window2))
+
+            # Draw the lane onto the warped blank image
+            if display_images == True:
+                cv2.fillPoly(window_image, np.int_([left_line_pts]), (0,255, 0))
+                cv2.fillPoly(window_image, np.int_([right_line_pts]), (0,255, 0))
+                result = cv2.addWeighted(output_image, 1, window_image, 0.3, 0)
+                figure10 = plt.figure()
+
+                # Plot the lines
+                plt.plot(left_fit_x, plot_y, color='yellow')
+                plt.plot(right_fit_x, plot_y, color='yellow')
+                plt.xlim(0, 1280)
+                plt.ylim(720, 0)
+                plt.imshow(result)
+                plt.title("Sliding Window Image")
+                plt.show()
+
+        # Phase 3
         else:
             # Get the non-zero values of the image
             nonzero = img.nonzero()
@@ -266,7 +315,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_lane_indices_best = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
                                       (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
-            # Again, extract left and right line pixel positions
+            # Extract left and right line pixel positions
             left_best_x = nonzero_x[left_lane_indices_best]
             left_best_y = nonzero_y[left_lane_indices_best]
             right_best_x = nonzero_x[right_lane_indices_best]
@@ -287,7 +336,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_lane_indices_recent = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
                                         (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
-            # Again, extract left and right line pixel positions
+            # Extract left and right line pixel positions
             left_x = nonzero_x[left_lane_indices_recent]
             left_y = nonzero_y[left_lane_indices_recent]
             right_x = nonzero_x[right_lane_indices_recent]
@@ -336,7 +385,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
                                  (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
-            # Again, extract left and right line pixel positions
+            # Extract left and right line pixel positions
             left_x = nonzero_x[left_lane_indices]
             left_y = nonzero_y[left_lane_indices]
             right_x = nonzero_x[right_lane_indices]
@@ -381,7 +430,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             cv2.fillPoly(window_image, np.int_([left_line_pts]), (0,255, 0))
             cv2.fillPoly(window_image, np.int_([right_line_pts]), (0,255, 0))
             result = cv2.addWeighted(output_image, 1, window_image, 0.3, 0)
-            figure6 = plt.figure()
+            figure11 = plt.figure()
 
             # Plot the lines
             plt.plot(left_fit_x, plot_y, color='yellow')

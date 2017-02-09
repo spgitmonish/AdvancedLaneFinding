@@ -8,7 +8,17 @@ import pickle
 
 def colorAndGradientThreshold(img, sx_thresh=(20, 120), s_thresh=(120, 220),
                               kernel_size=9, display_images=False):
-    '''Add comments'''
+    ''' Description: Applies color and gradient thresholding to produce a binary
+                     image which is used in the next stage of the pipeline
+
+        Inputs: img - Image to be undistorted
+                sx_thresh - Threshold range for gradient detection along x-axis
+                s_thresh - Threshold range for S channel(HLS) filter
+                kernel_size - Sobel Kernel size for gradient detection(odd)
+                display_images - When set to True displays images using pyplot
+
+        Outputs: combined_binary - Image after color & gradient thresholding
+    '''
     # Convert to HLS color space and separate the channels
     hls = cv2.cvtColor(img, cv2.COLOR_RGB2HLS).astype(np.float)
     h_channel = hls[:,:,0]
@@ -43,8 +53,8 @@ def colorAndGradientThreshold(img, sx_thresh=(20, 120), s_thresh=(120, 220),
 
     if display_images == True:
         # Plot the result
-        figure3, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
-        figure3.tight_layout()
+        figure4, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+        figure4.tight_layout()
 
         ax1.imshow(img)
         ax1.set_title('Original Image(S2)', fontsize=20)

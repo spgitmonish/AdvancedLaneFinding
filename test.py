@@ -15,11 +15,20 @@ from draw import *
 # Import the file with the class definition
 from line import Line
 
+# Import movie editor files
 from moviepy.editor import VideoFileClip
 
 def pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold):
-    # Undistort the image(needs to go in the pipeline)
+    ''' Description: This function tests out various stages of the pipeline
+                     on the test images
 
+        Inputs: objpoints - 3d Object points from chessboard corner detection
+                imgpoints - 2d Image points from chessboard corner detection
+                line_tracking - Object of type Line
+                averaging_threshold - Threshold for averaging best fit
+
+        Outputs: None
+    '''
     # Make a list of calibration images
     test_images = glob.glob('test_images/straight_lines*.jpg')
 
@@ -69,7 +78,15 @@ def pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
             drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, averaging_threshold, True)
 
 def pipelineVideo(image):
-    # The following two variables are globals
+    ''' Description: This function applies various stages of the pipeline on the
+                     image(which is a single frame captured from the video)
+
+        Inputs: image - Image which is processed
+
+        Outputs: result - Final image with lane drawn and curvature and position
+                          offset added to the image
+    '''
+    # The following two variables are globals(for tracking)
     global line_tracking
     global averaging_threshold
 
@@ -94,9 +111,11 @@ def pipelineVideo(image):
 
     return result
 
-# Calibrate the camera one time only
+# Lists which store the one time calibration of the camera
 objpoints = []
 imgpoints = []
+
+# One time call for calibration of the camera
 objpoints, imgpoints = cameraCalibration()
 
 # Create a Line object from the Line() class(use default values)
@@ -109,6 +128,7 @@ if run == 1:
     averaging_threshold = 3
     pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
 
+# Debug code which captures and applies the pipeline frame by frame
 elif run == 2:
     averaging_threshold = 10
     def debugRun():
@@ -123,6 +143,7 @@ elif run == 2:
 
     debugRun()
 
+# Pipeline on the video
 elif run == 3:
     averaging_threshold = 5
     # Video to test on

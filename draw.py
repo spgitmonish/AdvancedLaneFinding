@@ -3,6 +3,14 @@ import cv2
 import matplotlib.pyplot as plt
 
 def areaInFocus(img, vertices, display_images=False):
+    ''' Description: Displays the area on focus on the image using the vertices
+
+        Inputs: img - Image to show area on
+                vertices - Vertices for drawing a polygon
+                display_images - When set to True displays images using pyplot
+
+        Outputs: None
+    '''
     # Convert the 2D Gray image into 3D image with all 1's set to 255
     if img.shape[2]:
         image_in_focus = np.copy(img)
@@ -14,8 +22,8 @@ def areaInFocus(img, vertices, display_images=False):
 
     if display_images == True:
         # Plot the result
-        figure4, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
-        figure4.tight_layout()
+        figure5, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+        figure5.tight_layout()
 
         ax1.imshow(img, cmap="gray")
         ax1.set_title('Original Image(S3)', fontsize=20)
@@ -25,9 +33,26 @@ def areaInFocus(img, vertices, display_images=False):
 
         plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)
         plt.show()
+
     return
 
 def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, averaging_threshold, display_images=False):
+    ''' Description: Draws the lane on the original image using the parameters
+                     passed in. Also adds the curvature and car offset text to
+                     the image
+
+        Inputs: img - Image to draw lane and text on
+                warped - Warped Image
+                Minv - Inverse Perspective transform matrix
+                plot_y - Points along y-axis
+                left_fit_x - Left Lane x-axis points
+                right_fit_x - Right lane x-axis points
+                line_tracking - Modified object with new values
+                averaging_threshold - Threshold for going from phase 2->3(above)
+                display_images - When set to True displays images using pyplot
+
+        Outputs: result_copy - Image with detected lanes, curvature and offset
+    '''
     # Create an image to draw the lines on
     warp_zero = np.zeros_like(warped).astype(np.uint8)
     color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
@@ -40,7 +65,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # Draw the lane onto the warped blank image
     cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
 
-    # Warp the blank back to original image space using inverse perspective matrix (Minv)
+    # Warp the blank back to original image using inverse perspective matrix
     newwarp = cv2.warpPerspective(color_warp, Minv, (img.shape[1], img.shape[0]))
 
     # Combine the result with the original image
@@ -60,7 +85,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     ym_per_pix = 30/720 # meters per pixel in y dimension
     xm_per_pix = 3.7/800 # meters per pixel in x dimension
 
-    # The top of the car hood
+    # Picking a point which is 48 pixels from the bottom(top of the car's hood)
     max_point = (48/720)*30
 
     # Fit new polynomials to x,y in world space
@@ -80,7 +105,8 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
         print("RR", right_radius)
         print()
 
-    if(mean_radius >= 2.5):
+    if(mean_radius >= 3.0):
+        # NOTE: The radius of curvature of is infinite on a straight road
         radius_display = "Radius of curvature(km): Road is nearly straight"
     else:
         radius_display = "Radius of curvature(km): " + str(mean_radius)
@@ -89,7 +115,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # font size as 3, in white, thickness of 2 and line type AA
     cv2.putText(result_copy, str(radius_display), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)
 
-    # Calculate the position of the car relative to the road
+    # Calculate the position of the car relative to the center of the lane
     car_position = (np.mean(line_tracking.all_x[1]) - np.mean(line_tracking.all_x[0]))/2
     # Convert the car position into meters
     car_position = car_position * xm_per_pix
@@ -104,10 +130,11 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     else:
         position_display = "Car is " + str(car_offset) + "(m) to the right of center"
 
+    # Display the position text
     cv2.putText(result_copy, str(position_display), (30, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)
 
     if display_images == True:
-        figure9 = plt.figure()
+        figure12 = plt.figure()
         plt.imshow(result_copy)
         plt.title("Lane Image(mod)")
         plt.show()
