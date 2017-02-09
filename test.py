@@ -327,7 +327,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
         right_base_x = np.argmax(histogram[midpoint:]) + midpoint
 
         # Choose the number of sliding windows
-        number_windows = 8
+        number_windows = 9
 
         # Set height of windows
         window_height = np.int(img.shape[0]/number_windows)
@@ -453,7 +453,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             plt.xlim(0, 1280)
             plt.ylim(720, 0)
             plt.imshow(output_image)
-            plt.title("Sliding Window Image")
+            plt.title("Colored Sliding Window Image")
 
         # Return the values
         return plot_y, left_fit_x, right_fit_x, line_tracking
@@ -493,11 +493,6 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             left_y = nonzero_y[left_lane_indices]
             right_x = nonzero_x[right_lane_indices]
             right_y = nonzero_y[right_lane_indices]
-
-            print(len(left_x))
-            print(len(left_y))
-            print(len(right_x))
-            print(len(right_y))
 
             # Fit a second order polynomial to each
             left_fit = np.polyfit(left_y, left_x, 2)
@@ -546,6 +541,14 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
 
         # If there is a best fit then use this algorithm
         else:
+            # Get the non-zero values of the image
+            nonzero = img.nonzero()
+            nonzero_y = np.array(nonzero[0])
+            nonzero_x = np.array(nonzero[1])
+
+            # Width of the window
+            margin = 100
+
             # Line fit for current iteration
             left_fit = np.array([0.0, 0.0, 0.0])
             right_fit = np.array([0.0, 0.0, 0.0])
@@ -559,19 +562,82 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_fit[1] = line_tracking.best_fit_right[1]
             right_fit[2] = line_tracking.best_fit_right[2]
 
-            # Get the non-zero values of the image
-            nonzero = img.nonzero()
-            nonzero_y = np.array(nonzero[0])
-            nonzero_x = np.array(nonzero[1])
+            # Find the left and right lane indices within a margin specified
+            left_lane_indices_best = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
+                                     (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
+            right_lane_indices_best = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
+                                      (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
-            # Width of the window
-            margin = 100
+            # Again, extract left and right line pixel positions
+            left_best_x = nonzero_x[left_lane_indices_best]
+            left_best_y = nonzero_y[left_lane_indices_best]
+            right_best_x = nonzero_x[right_lane_indices_best]
+            right_best_y = nonzero_y[right_lane_indices_best]
+
+            # Get the line fit information for left and right lanes
+            left_fit[0] = line_tracking.most_recent_fit[0][0]
+            left_fit[1] = line_tracking.most_recent_fit[0][1]
+            left_fit[2] = line_tracking.most_recent_fit[0][2]
+
+            right_fit[0] = line_tracking.most_recent_fit[1][0]
+            right_fit[1] = line_tracking.most_recent_fit[1][1]
+            right_fit[2] = line_tracking.most_recent_fit[1][2]
+
+            # Find the left and right lane indices within a margin specified
+            left_lane_indices_recent = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
+                                       (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
+            right_lane_indices_recent = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
+                                        (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
+
+            # Again, extract left and right line pixel positions
+            left_x = nonzero_x[left_lane_indices_recent]
+            left_y = nonzero_y[left_lane_indices_recent]
+            right_x = nonzero_x[right_lane_indices_recent]
+            right_y = nonzero_y[right_lane_indices_recent]
+
+            # If the number of pixels detected by using the most recent fit is
+            # greater than the number detected using the best fit then update
+            # values in the Line() object, else don't change the best fit values
+            #if(((left_x > 15000) and (left_x > left_best_x)) or ((right_x > 15000) and (left_x > right_best_x))):
+            if (len(left_x) > len(left_best_x)) or (len(right_x) > len(right_best_x)):
+                # Remove the oldest entry and append new entry
+                line_tracking.recent_fitted.pop(0)
+                line_tracking.recent_fitted.append([left_fit, right_fit])
+
+                # Update the best fit calculations
+                best_fit_left = np.array([0.0, 0.0, 0.0])
+                best_fit_right = np.array([0.0, 0.0, 0.0])
+
+                # Go through the list of recent fits
+                for index in range(0, len(line_tracking.recent_fitted)):
+                    # Get the coefficient values of each of the left and right tracks
+                    for coefficient in range(0, 3):
+                        best_fit_left[coefficient] = best_fit_left[coefficient] + line_tracking.recent_fitted[index][0][coefficient]
+                        best_fit_right[coefficient] = best_fit_right[coefficient] + line_tracking.recent_fitted[index][1][coefficient]
+
+                # Find the average for each of the coefficients
+                for coefficient in range(0, 3):
+                    best_fit_left[coefficient] = best_fit_left[coefficient]/len(line_tracking.recent_fitted)
+                    best_fit_right[coefficient] = best_fit_right[coefficient]/len(line_tracking.recent_fitted)
+
+                # Store the values back into the object
+                line_tracking.best_fit_left = best_fit_left
+                line_tracking.best_fit_right = best_fit_right
+
+            # Get the line fit information for left and right lanes
+            left_fit[0] = line_tracking.best_fit_left[0]
+            left_fit[1] = line_tracking.best_fit_left[1]
+            left_fit[2] = line_tracking.best_fit_left[2]
+
+            right_fit[0] = line_tracking.best_fit_right[0]
+            right_fit[1] = line_tracking.best_fit_right[1]
+            right_fit[2] = line_tracking.best_fit_right[2]
 
             # Find the left and right lane indices within a margin specified
             left_lane_indices = ((nonzero_x > (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] - margin)) &
-                                 (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
+                                (nonzero_x < (left_fit[0]*(nonzero_y**2) + left_fit[1]*nonzero_y + left_fit[2] + margin)))
             right_lane_indices = ((nonzero_x > (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] - margin)) &
-                                  (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
+                                 (nonzero_x < (right_fit[0]*(nonzero_y**2) + right_fit[1]*nonzero_y + right_fit[2] + margin)))
 
             # Again, extract left and right line pixel positions
             left_x = nonzero_x[left_lane_indices]
@@ -579,30 +645,21 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_x = nonzero_x[right_lane_indices]
             right_y = nonzero_y[right_lane_indices]
 
-            print(len(left_x))
-            print(len(left_y))
-            print(len(right_x))
-            print(len(right_y))
-
             # Fit a second order polynomial to each
             left_fit = np.polyfit(left_y, left_x, 2)
             right_fit = np.polyfit(right_y, right_x, 2)
 
             # Generate x and y values for plotting
-            plot_y = np.linspace(0, img.shape[0]-1, img.shape[0] )
+            plot_y = np.linspace(0, img.shape[0]-1, img.shape[0])
             left_fit_x = left_fit[0]*plot_y**2 + left_fit[1]*plot_y + left_fit[2]
             right_fit_x = right_fit[0]*plot_y**2 + right_fit[1]*plot_y + right_fit[2]
 
-            # Populate the Line object with the first time fit information
-            # Most recent fit(store plot_y to avoid data generation everytime)
+            # Most recent fit
             line_tracking.most_recent_fit = [left_fit, right_fit]
 
             # x and y values for the recent detected line pixels
             line_tracking.all_x = [left_x, right_x]
             line_tracking.all_y = [left_y, right_y]
-
-            # NOTE: Need to add code which calculates that the new fit did well
-            #       by itself and needs to be added to the last n
 
         # Create an image to draw on and an image to show the selection window
         output_image = np.dstack((img, img, img))*255
@@ -794,12 +851,12 @@ objpoints, imgpoints = cameraCalibration()
 
 # Create a Line object from the Line() class(use default values)
 line_tracking = Line()
-averaging_threshold = 5
 
-run = 1
+run = 2
 
 # Pipeline test on the images
 if run == 1:
+    averaging_threshold = 3
     pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
 
 def debugRun():
@@ -815,6 +872,7 @@ def debugRun():
 #debugRun()
 
 if run == 2:
+    averaging_threshold = 5
     # Video to test on
     project_output = 'project_video_output.mp4'
     project_clip = VideoFileClip("project_video.mp4")
