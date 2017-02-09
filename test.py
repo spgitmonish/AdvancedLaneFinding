@@ -146,6 +146,7 @@ elif run == 2:
 # Pipeline on the video
 elif run == 3:
     averaging_threshold = 5
+
     # Video to test on
     project_output = 'project_video_output.mp4'
     project_clip = VideoFileClip("project_video.mp4")

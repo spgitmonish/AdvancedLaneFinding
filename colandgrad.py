@@ -25,8 +25,17 @@ def colorAndGradientThreshold(img, sx_thresh=(20, 120), s_thresh=(120, 220),
     l_channel = hls[:,:,1]
     s_channel = hls[:,:,2]
 
-    # Take the derivative in x
-    sobel_x = cv2.Sobel(l_channel, cv2.CV_64F, 1, 0, ksize=kernel_size)
+    # Determines if gray scale is used or the L channel of an HLS image is used
+    use_gray_scale = False
+
+    if use_gray_scale == True:
+        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY).astype(np.float)
+        # Take the derivative in x using gray scale image
+        sobel_x = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=kernel_size)
+    else:
+        # Take the derivative in x using the L channel of the HLS image
+        sobel_x = cv2.Sobel(l_channel, cv2.CV_64F, 1, 0, ksize=kernel_size)
+
     # Absolute x derivative to accentuate lines away from horizontal
     abs_sobel_x = np.absolute(sobel_x)
     # 8 bit scaling

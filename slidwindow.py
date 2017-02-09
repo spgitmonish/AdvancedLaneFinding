@@ -142,9 +142,9 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
         # Most recent fit
         line_tracking.most_recent_fit = [left_fit, right_fit]
 
-        # x and y values for detected line pixels
-        line_tracking.all_x = [left_x, right_x]
-        line_tracking.all_y = [left_y, right_y]
+        # x and y points for detected line pixels
+        line_tracking.all_x.append([left_x, right_x])
+        line_tracking.all_y.append([left_y, right_y])
 
         # Recent coefficients for left and right lanes
         line_tracking.recent_fitted.append([left_fit, right_fit])
@@ -220,9 +220,9 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             # Most recent fit
             line_tracking.most_recent_fit = [left_fit, right_fit]
 
-            # x and y values for the recent detected line pixels
-            line_tracking.all_x = [left_x, right_x]
-            line_tracking.all_y = [left_y, right_y]
+            # x and y points for detected line pixels
+            line_tracking.all_x.append([left_x, right_x])
+            line_tracking.all_y.append([left_y, right_y])
 
             # Recent X fits for left and right lanes
             line_tracking.recent_fitted.append([left_fit, right_fit])
@@ -346,7 +346,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             # greater than the number detected using the best fit then update
             # values in the Line() object, else don't change the best fit values
             if (len(left_x) > len(left_best_x)) or (len(right_x) > len(right_best_x)):
-                # Remove the oldest entry and append new entry
+                # Remove the oldest entry and append new fit entry
                 line_tracking.recent_fitted.pop(0)
                 line_tracking.recent_fitted.append([left_fit, right_fit])
 
@@ -403,9 +403,12 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             # Most recent fit
             line_tracking.most_recent_fit = [left_fit, right_fit]
 
-            # x and y values for the recent detected line pixels
-            line_tracking.all_x = [left_x, right_x]
-            line_tracking.all_y = [left_y, right_y]
+            # Remove the oldest entry and add the new x and y points
+            # for detected line pixels
+            line_tracking.all_x.pop(0)
+            line_tracking.all_y.pop(0)
+            line_tracking.all_x.append([left_x, right_x])
+            line_tracking.all_y.append([left_y, right_y])
 
         # Create an image to draw on and an image to show the selection window
         output_image = np.dstack((img, img, img))*255

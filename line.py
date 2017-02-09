@@ -32,8 +32,8 @@ class Line():
         # Difference in fit coefficients between last and new fits
         self.diff_coefficients = np.array([0,0,0], dtype='float')
 
-        # x values for detected line pixels
-        self.all_x = None
+        # x values list of last n detected lane pixels(left and right)
+        self.all_x = []
 
-        # y values for detected line pixels
-        self.all_y = None
+        # y values list of last n detected lane pixels(left and right)
+        self.all_y = []

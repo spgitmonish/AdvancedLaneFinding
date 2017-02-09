@@ -88,9 +88,35 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # Picking a point which is 48 pixels from the bottom(top of the car's hood)
     max_point = (48/720)*30
 
-    # Fit new polynomials to x,y in world space
-    left_fit_cr = np.polyfit(line_tracking.all_y[0]*ym_per_pix, line_tracking.all_x[0]*xm_per_pix, 2)
-    right_fit_cr = np.polyfit(line_tracking.all_y[1]*ym_per_pix, line_tracking.all_x[1]*xm_per_pix, 2)
+    # Local copy of threshold_count
+    threshold_count = line_tracking.threshold_count
+
+    if (threshold_count >= averaging_threshold):
+        # Initial setup for concatenation of arrays(x and y points of lane pixels)
+        all_x_left = np.array(line_tracking.all_x[0][0])
+        all_x_right = np.array(line_tracking.all_x[0][1])
+        all_y_left = np.array(line_tracking.all_y[0][0])
+        all_y_right = np.array(line_tracking.all_y[0][1])
+
+        # Concatenate(horizontally stack) the arrays into one single source
+        for index in range(1, len(line_tracking.all_x)):
+            all_x_left = np.hstack(all_x_left, np.array(line_tracking.all_x[index][0]))
+            all_x_right = np.hstack(all_x_right, np.array(line_tracking.all_x[index][1]))
+            all_y_left = np.hstack(all_y_left, np.array(line_tracking.all_y[index][0]))
+            all_y_right = np.hstack(all_y_right, np.array(line_tracking.all_y[index][1]))
+    else:
+        # Use the latest entry in the list
+        all_x = line_tracking.all_x.pop()
+        all_x_left = all_x[0]
+        all_x_right = all_x[1]
+
+        all_y = line_tracking.all_y.pop()
+        all_y_left = all_y[0]
+        all_y_right = all_y[1]
+
+    # Fit new polynomials to x,y in world space based on the last n frames
+    left_fit_cr = np.polyfit(all_y_left*ym_per_pix, all_x_left*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(all_y_right*ym_per_pix, all_x_right*xm_per_pix, 2)
 
     # Calculate the new radii of curvature
     left_radius = ((1 + (2*left_fit_cr[0]*max_point*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
@@ -116,7 +142,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     cv2.putText(result_copy, str(radius_display), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)
 
     # Calculate the position of the car relative to the center of the lane
-    car_position = (np.mean(line_tracking.all_x[1]) - np.mean(line_tracking.all_x[0]))/2
+    car_position = (np.mean(all_x_right) - np.mean(all_x_left))/2
     # Convert the car position into meters
     car_position = car_position * xm_per_pix
 
