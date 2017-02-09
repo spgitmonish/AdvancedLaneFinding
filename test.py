@@ -494,6 +494,11 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             right_x = nonzero_x[right_lane_indices]
             right_y = nonzero_y[right_lane_indices]
 
+            print(len(left_x))
+            print(len(left_y))
+            print(len(right_x))
+            print(len(right_y))
+
             # Fit a second order polynomial to each
             left_fit = np.polyfit(left_y, left_x, 2)
             right_fit = np.polyfit(right_y, right_x, 2)
@@ -573,6 +578,11 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
             left_y = nonzero_y[left_lane_indices]
             right_x = nonzero_x[right_lane_indices]
             right_y = nonzero_y[right_lane_indices]
+
+            print(len(left_x))
+            print(len(left_y))
+            print(len(right_x))
+            print(len(right_y))
 
             # Fit a second order polynomial to each
             left_fit = np.polyfit(left_y, left_x, 2)
@@ -786,7 +796,7 @@ objpoints, imgpoints = cameraCalibration()
 line_tracking = Line()
 averaging_threshold = 5
 
-run = 2
+run = 1
 
 # Pipeline test on the images
 if run == 1:
