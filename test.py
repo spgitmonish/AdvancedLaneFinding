@@ -29,7 +29,7 @@ def pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
 
         Outputs: None
     '''
-    # Make a list of calibration images
+    '''# Make a list of calibration images
     test_images = glob.glob('test_images/straight_lines*.jpg')
 
     # Set 1
@@ -75,6 +75,28 @@ def pipelineTestImages(objpoints, imgpoints, line_tracking, averaging_threshold)
             plot_y, left_fit_x, right_fit_x, line_tracking = slidingWindow(warped, line_tracking, averaging_threshold, False)
 
             # Draw the lane
+            drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, averaging_threshold, True)'''
+
+    test_images = glob.glob('video_images/FC*.jpg')
+    for idx, fname in enumerate(test_images):
+        if(idx == 0) or True:
+            # Get the image to test
+            test_image = mpimg.imread(fname)
+
+            # Undistort the image
+            undistorted_image = undistortImage(test_image, objpoints, imgpoints, True)
+
+            # Apply color and gradient thresholding
+            thresholded_image = colorAndGradientThreshold(img=undistorted_image, display_images=True)
+
+            # Get the perspective transform of the image
+            warped_image, Minv = perspectiveTransform(test_image, thresholded_image, True)
+            warped = np.copy(warped_image)
+
+            # Apply sliding window
+            plot_y, left_fit_x, right_fit_x, line_tracking = slidingWindow(warped, line_tracking, averaging_threshold, True)
+
+            # Draw the lane
             drawLane(test_image, warped_image, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, averaging_threshold, True)
 
 def pipelineVideo(image):
@@ -116,12 +138,12 @@ objpoints = []
 imgpoints = []
 
 # One time call for calibration of the camera
-objpoints, imgpoints = cameraCalibration()
+#objpoints, imgpoints = cameraCalibration()
 
 # Create a Line object from the Line() class(use default values)
 line_tracking = Line()
 
-run = 3
+run = 1
 
 # Pipeline test on the images
 if run == 1:
@@ -132,14 +154,18 @@ if run == 1:
 elif run == 2:
     averaging_threshold = 5
     def debugRun():
-        project_output = 'project_video.mp4'
-        project_clip = VideoFileClip("project_video.mp4")
+        #project_clip = VideoFileClip("project_video.mp4")
+        project_clip = VideoFileClip("challenge_video.mp4")
         frameCount = 0
         for frame in project_clip.iter_frames():
             #print("FC: " + str(frameCount) + ", RoC: " + str(line_tracking.radius_of_curvature))
-            print(str(line_tracking.radius_of_curvature))
+            print("FC: " + str(frameCount))
+            filename = "video_images/FC" + str(frameCount) + ".jpg"
+            #print(str(line_tracking.radius_of_curvature))
             #if frameCount == 120:
-            result = pipelineVideo(frame)
+            #result = pipelineVideo(frame)
+            # Save file
+            mpimg.imsave(filename, frame)
             frameCount = frameCount + 1
 
     debugRun()
