@@ -130,13 +130,14 @@ if run == 1:
 
 # Debug code which captures and applies the pipeline frame by frame
 elif run == 2:
-    averaging_threshold = 10
+    averaging_threshold = 5
     def debugRun():
         project_output = 'project_video.mp4'
         project_clip = VideoFileClip("project_video.mp4")
         frameCount = 0
         for frame in project_clip.iter_frames():
-            print("\n\nFC: ", str(frameCount))
+            #print("FC: " + str(frameCount) + ", RoC: " + str(line_tracking.radius_of_curvature))
+            print(str(line_tracking.radius_of_curvature))
             #if frameCount == 120:
             result = pipelineVideo(frame)
             frameCount = frameCount + 1

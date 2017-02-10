@@ -91,7 +91,7 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # Local copy of threshold_count
     threshold_count = line_tracking.threshold_count
 
-    if (threshold_count >= averaging_threshold):
+    if (threshold_count > averaging_threshold):
         # Initial setup for concatenation of arrays(x and y points of lane pixels)
         all_x_left = np.array(line_tracking.all_x[0][0])
         all_x_right = np.array(line_tracking.all_x[0][1])
@@ -100,17 +100,18 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
 
         # Concatenate(horizontally stack) the arrays into one single source
         for index in range(1, len(line_tracking.all_x)):
-            all_x_left = np.hstack(all_x_left, np.array(line_tracking.all_x[index][0]))
-            all_x_right = np.hstack(all_x_right, np.array(line_tracking.all_x[index][1]))
-            all_y_left = np.hstack(all_y_left, np.array(line_tracking.all_y[index][0]))
-            all_y_right = np.hstack(all_y_right, np.array(line_tracking.all_y[index][1]))
+            all_x_left = np.hstack((all_x_left, np.array(line_tracking.all_x[index][0])))
+            all_x_right = np.hstack((all_x_right, np.array(line_tracking.all_x[index][1])))
+
+            all_y_left = np.hstack((all_y_left, np.array(line_tracking.all_y[index][0])))
+            all_y_right = np.hstack((all_y_right, np.array(line_tracking.all_y[index][1])))
     else:
         # Use the latest entry in the list
-        all_x = line_tracking.all_x.pop()
+        all_x = line_tracking.all_x[-1]
         all_x_left = all_x[0]
         all_x_right = all_x[1]
 
-        all_y = line_tracking.all_y.pop()
+        all_y = line_tracking.all_y[-1]
         all_y_left = all_y[0]
         all_y_right = all_y[1]
 
@@ -146,15 +147,15 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # Convert the car position into meters
     car_position = car_position * xm_per_pix
 
-    # Get the car offset from the center in meters(rounded to 4 decimal places)
+    # Get the car offset from the center in centimeters(rounded to 4)
     car_offset = car_position - 1.85
-    car_offset = round(car_offset, 4)
+    car_offset = round(car_offset, 4) * 100
 
     # Check where the car is positioned with respect to the center
     if car_offset < 0:
-        position_display = "Car is " + str(abs(car_offset)) + "(m) to the left of center"
+        position_display = "Car is " + str(abs(car_offset)) + "(cm) to the left of center"
     else:
-        position_display = "Car is " + str(car_offset) + "(m) to the right of center"
+        position_display = "Car is " + str(car_offset) + "(cm) to the right of center"
 
     # Display the position text
     cv2.putText(result_copy, str(position_display), (30, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)

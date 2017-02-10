@@ -232,7 +232,7 @@ def slidingWindow(img, line_tracking, averaging_threshold, display_images=False)
 
             # Check to see if the threshold has been met, if so, then compute
             # the average best fit which will get things to Phase 3
-            if line_tracking.threshold_count >= averaging_threshold:
+            if line_tracking.threshold_count > averaging_threshold:
                 best_fit_left = np.array([0.0, 0.0, 0.0])
                 best_fit_right = np.array([0.0, 0.0, 0.0])
 
