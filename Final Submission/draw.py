@@ -142,17 +142,18 @@ def drawLane(img, warped, Minv, plot_y, left_fit_x, right_fit_x, line_tracking, 
     # font size as 3, in white, thickness of 2 and line type AA
     cv2.putText(result_copy, str(radius_display), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 1, cv2.LINE_AA)
 
-    # Calculate the position of the car relative to the center of the lane
-    car_position = (np.mean(all_x_right) - np.mean(all_x_left))/2
-    # Convert the car position into meters
-    car_position = car_position * xm_per_pix
+    # Calculate the position of the car relative to the center of the the image
+    car_position = (np.mean(all_x_right) + np.mean(all_x_left))/2
+    car_offset = car_position - (img.shape[1]/2)
+
+    # Convert the car offset into meters
+    car_offset = car_offset * xm_per_pix
 
     # Get the car offset from the center in centimeters(rounded to 4)
-    car_offset = car_position - 1.85
-    car_offset = round(car_offset, 4) * 100
+    car_offset = round(car_offset, 4)*100
 
     # Check where the car is positioned with respect to the center
-    if car_offset < 0:
+    if car_offset <= 0:
         position_display = "Car is " + str(abs(car_offset)) + "(cm) to the left of center"
     else:
         position_display = "Car is " + str(car_offset) + "(cm) to the right of center"
