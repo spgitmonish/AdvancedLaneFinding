@@ -1,5 +1,5 @@
 ## Introduction
-In Project 1 of this course we students designed a lane finder using Hough Transforms and Canny edge detection. The aim of this project was to do the same but also detect curvature of the line and also the car offset from the center. This project involved more advanced computer vision techniques. Here is a snippet of the pipeline.
+In Project 1 of this course we students designed a lane finder using Hough Transforms and Canny edge detection. The aim of this project was to do the same but also detect curvature of the line and the car offset from the center. This project involved more advanced computer vision techniques. Here is a snippet of the pipeline.
  
 <p align="center">
 ![Pipeline](Pipeline.jpg)
@@ -7,10 +7,10 @@ In Project 1 of this course we students designed a lane finder using Hough Trans
 *Figure 1*
 
 ## Camera Calibration
-First stage of the pipeline was to calibrate the camera using chessboard images. OpenCV has in built functions which takes in chessboard images and searches for the specified number of corners in the images. If the corners were found successfully on the images then the camera is successfully calibrated and images can be undistorted using the camera matrix which has the focal length and camera center information.
+First stage of the pipeline was to calibrate the camera using chessboard images. OpenCV has in built functions which takes in chessboard images and searches for the specified number of corners(3d object points) in the images. If the corners were found successfully on the images then the camera is successfully calibrated and images can be undistorted using the camera matrix, which has the focal length and camera center information.
 
-The image set provided by Udacity had 9,6 corners. On 3 images in the set I had to use a different set of corners to make sure the OpenCV findChessboardCorners() function detected corners in those 
-images as well.
+The image set provided by Udacity had 9,6 corners. For 3 of images in the set I had to use a different set of corners to make sure the OpenCV findChessboardCorners() function detected corners in those 
+images as well. The API returns image points(2d) which represents the position of the points in the images.
 
 ![Chessboard](Chessboard.jpg)
 <p align="center">
@@ -75,9 +75,9 @@ These vertices works really well when we consider the area in focus(source verti
 > Code: persptrans.py, Function: perspectiveTransform()
 
 ## Lane, RoC and Offset
-The final stage of the pipeline is to understand the transformed image and detect the lines, the curvature and the offset of the car within the lane. I approached the lane detection in 3 phases.
+The final stage of the pipeline is to understand the transformed image and detect the lines, the curvature and the offset of the car within the lane. I solved this problem by approaching it in 3 phases.
 
-* **Sliding Window**: Used the recommended detection method provided by Udacity. The core idea is first take a histogram of the binary image along the columns to detect peaks(left and right lanes). Detecting the peaks will give the x-position of the left and right lanes. From those two points, a sliding window is placed around the line centers, to find and follow the lines up to the top of the frame. 
+* **Sliding Window(Phase 1)**: Used the recommended detection method provided by Udacity. The core idea is to first take a histogram of the binary image along the columns to detect peaks(left and right lanes). Detecting the peaks will give the x-position of the left and right lanes. From those two points, a sliding window is placed around the line centers, to find and follow the lines up to the top of the frame. 
 
 ![Histogram](Histogram.jpg)
 <p align="center">
@@ -87,13 +87,13 @@ The final stage of the pipeline is to understand the transformed image and detec
 <p align="center">
 *Figure 9*
 
-* **Search Window(around previous search)**: As recommended by Udacity, it is not required that we need to do the search from scratch on a new frame. A margin/offset from the previous lane position can be used for search for the next frame. This reduces processing time drastically. I also use this phase only till a threshold is met(5), after which I use averaging and best fit(Phase 3) to predict lanes.
+* **Search Window(Phase 2)**: As recommended by Udacity, it is not required that we need to do the search from scratch on a new frame. A margin/offset from the previous lane position can be used for search for the next frame. This reduces processing time drastically. I also used this phase only till a threshold is met(5), after which I used averaging and best fit(Phase 3) to predict lanes.
 
 ![SearchWindow](SearchWindow.jpg)
 <p align="center">
 *Figure 10*
 
-* **Mean Search Window(to smooth detection)**: Once a threshold is met, I calculated the best fit of the last 'N' frames(set to 5) and used that for predicting the lane position in the next frame. If the prediction using the best fit is better than the prediction using the most recent fit then there is no change in the best fit. But if the most recent fit predicted the lane position more accurately then the best fit. Then the new fit is added to the best fit calculation after the oldest entry(used for predicting the best fit) is kicked out(aka FIFO). This phase really helped smoothing out the lane drawings, radius of curvature and offset.
+* **Mean Search Window(Phase 3)**: Once a threshold is met, I calculated the best fit of the last 'N' frames(set to 5) and used that for predicting the lane position in the next frame. If the prediction using the best fit is better than the prediction using the most recent fit then there is no change in the best fit. But if the most recent fit predicted the current frame's lane position more accurately than the best fit, the new fit is added to the best fit FIFO after the oldest entry(used for predicting the best fit) is kicked out(aka FIFO). This phase really helped smoothing out the lane drawings, radius of curvature and offset.
 
 > Code: slidwindow.py, Function: slidingWindow()
 
