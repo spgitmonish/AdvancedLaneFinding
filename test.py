@@ -138,7 +138,7 @@ objpoints = []
 imgpoints = []
 
 # One time call for calibration of the camera
-#objpoints, imgpoints = cameraCalibration()
+objpoints, imgpoints = cameraCalibration()
 
 # Create a Line object from the Line() class(use default values)
 line_tracking = Line()
