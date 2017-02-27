@@ -103,7 +103,7 @@ Here is a sample of how my final output looks like.
 <p align="center">
 *Figure 11*
 
-Link to final video: 
+Link to final video: project_video_output.mp4
 
 > Main Code: test.py
  
