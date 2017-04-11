@@ -1,8 +1,8 @@
 ## Introduction
 In Project 1 of this course we students designed a lane finder using Hough Transforms and Canny edge detection. The aim of this project was to do the same but also detect curvature of the line and the car offset from the center. This project involved more advanced computer vision techniques. Here is a snippet of the pipeline.
- 
-![Pipeline](report/Pipeline.jpg)
+
 <p align="center">
+![Pipeline](report/Pipeline.jpg)
 *Figure 1*
 
 ## Camera Calibration
